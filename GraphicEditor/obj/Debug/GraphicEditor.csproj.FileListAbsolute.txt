@@ -1,0 +1,17 @@
+E:\Универ\GraphicEditor\TestTaskUntilov\bin\Debug\GraphicEditor.exe.config
+E:\Универ\GraphicEditor\TestTaskUntilov\bin\Debug\GraphicEditor.exe
+E:\Универ\GraphicEditor\TestTaskUntilov\bin\Debug\GraphicEditor.pdb
+E:\Универ\GraphicEditor\TestTaskUntilov\obj\Debug\GraphicEditor.FormEditor.resources
+E:\Универ\GraphicEditor\TestTaskUntilov\obj\Debug\GraphicEditor.Properties.Resources.resources
+E:\Универ\GraphicEditor\TestTaskUntilov\obj\Debug\GraphicEditor.csproj.GenerateResource.Cache
+E:\Универ\GraphicEditor\TestTaskUntilov\obj\Debug\GraphicEditor.exe
+E:\Универ\GraphicEditor\TestTaskUntilov\obj\Debug\GraphicEditor.pdb
+E:\Универ\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.exe.config
+E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.exe
+E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.pdb
+E:\Универ\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.exe
+E:\Универ\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.pdb
+E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormEditor.resources
+E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.Properties.Resources.resources
+E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.csproj.GenerateResource.Cache
+E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormColorCorrection.resources

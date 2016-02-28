@@ -1,0 +1,9 @@
+E:\Универ\TestTaskUntilov\TestTaskUntilov\bin\Debug\TestTaskUntilov.exe.config
+E:\Универ\TestTaskUntilov\TestTaskUntilov\bin\Debug\TestTaskUntilov.exe
+E:\Универ\TestTaskUntilov\TestTaskUntilov\bin\Debug\TestTaskUntilov.pdb
+E:\Универ\TestTaskUntilov\TestTaskUntilov\obj\Debug\TestTaskUntilov.csprojResolveAssemblyReference.cache
+E:\Универ\TestTaskUntilov\TestTaskUntilov\obj\Debug\TestTaskUntilov.FormEditor.resources
+E:\Универ\TestTaskUntilov\TestTaskUntilov\obj\Debug\TestTaskUntilov.Properties.Resources.resources
+E:\Универ\TestTaskUntilov\TestTaskUntilov\obj\Debug\TestTaskUntilov.csproj.GenerateResource.Cache
+E:\Универ\TestTaskUntilov\TestTaskUntilov\obj\Debug\TestTaskUntilov.exe
+E:\Универ\TestTaskUntilov\TestTaskUntilov\obj\Debug\TestTaskUntilov.pdb
