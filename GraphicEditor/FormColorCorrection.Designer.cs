@@ -72,6 +72,7 @@
             // buttonCancel
             // 
             this.buttonCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel;
+            this.buttonCancel.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonCancel.Location = new System.Drawing.Point(527, 309);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(176, 45);
@@ -82,6 +83,7 @@
             // 
             // buttonApply
             // 
+            this.buttonApply.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.buttonApply.Location = new System.Drawing.Point(347, 309);
             this.buttonApply.Name = "buttonApply";
             this.buttonApply.Size = new System.Drawing.Size(176, 45);
@@ -101,6 +103,7 @@
             this.groupBox1.Controls.Add(this.trackBarGreen);
             this.groupBox1.Controls.Add(this.label4);
             this.groupBox1.Controls.Add(this.trackBarRed);
+            this.groupBox1.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(347, 156);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(359, 147);
@@ -113,7 +116,7 @@
             this.textBoxBlue.Location = new System.Drawing.Point(318, 107);
             this.textBoxBlue.MaxLength = 4;
             this.textBoxBlue.Name = "textBoxBlue";
-            this.textBoxBlue.Size = new System.Drawing.Size(38, 20);
+            this.textBoxBlue.Size = new System.Drawing.Size(38, 24);
             this.textBoxBlue.TabIndex = 14;
             this.textBoxBlue.Text = "0";
             this.textBoxBlue.TextChanged += new System.EventHandler(this.textBoxBlue_TextChanged);
@@ -124,7 +127,7 @@
             this.textBoxGreen.Location = new System.Drawing.Point(318, 67);
             this.textBoxGreen.MaxLength = 4;
             this.textBoxGreen.Name = "textBoxGreen";
-            this.textBoxGreen.Size = new System.Drawing.Size(38, 20);
+            this.textBoxGreen.Size = new System.Drawing.Size(38, 24);
             this.textBoxGreen.TabIndex = 13;
             this.textBoxGreen.Text = "0";
             this.textBoxGreen.TextChanged += new System.EventHandler(this.textBoxGreen_TextChanged);
@@ -135,7 +138,7 @@
             this.textBoxRed.Location = new System.Drawing.Point(318, 25);
             this.textBoxRed.MaxLength = 4;
             this.textBoxRed.Name = "textBoxRed";
-            this.textBoxRed.Size = new System.Drawing.Size(38, 20);
+            this.textBoxRed.Size = new System.Drawing.Size(38, 24);
             this.textBoxRed.TabIndex = 12;
             this.textBoxRed.Text = "0";
             this.textBoxRed.TextChanged += new System.EventHandler(this.textBoxRed_TextChanged);
@@ -146,7 +149,7 @@
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(7, 110);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(17, 13);
+            this.label6.Size = new System.Drawing.Size(16, 15);
             this.label6.TabIndex = 11;
             this.label6.Text = "B:";
             // 
@@ -166,7 +169,7 @@
             this.label5.AutoSize = true;
             this.label5.Location = new System.Drawing.Point(6, 70);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(18, 13);
+            this.label5.Size = new System.Drawing.Size(18, 15);
             this.label5.TabIndex = 9;
             this.label5.Text = "G:";
             // 
@@ -186,7 +189,7 @@
             this.label4.AutoSize = true;
             this.label4.Location = new System.Drawing.Point(5, 28);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(18, 13);
+            this.label4.Size = new System.Drawing.Size(17, 15);
             this.label4.TabIndex = 7;
             this.label4.Text = "R:";
             // 
@@ -205,6 +208,7 @@
             // 
             this.groupBox2.Controls.Add(this.textBoxBrightness);
             this.groupBox2.Controls.Add(this.trackBarBrightness);
+            this.groupBox2.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox2.Location = new System.Drawing.Point(12, 207);
             this.groupBox2.Name = "groupBox2";
             this.groupBox2.Size = new System.Drawing.Size(332, 45);
@@ -215,10 +219,10 @@
             // textBoxBrightness
             // 
             this.textBoxBrightness.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxBrightness.Location = new System.Drawing.Point(291, 22);
+            this.textBoxBrightness.Location = new System.Drawing.Point(291, 18);
             this.textBoxBrightness.MaxLength = 4;
             this.textBoxBrightness.Name = "textBoxBrightness";
-            this.textBoxBrightness.Size = new System.Drawing.Size(38, 20);
+            this.textBoxBrightness.Size = new System.Drawing.Size(38, 24);
             this.textBoxBrightness.TabIndex = 7;
             this.textBoxBrightness.Text = "0";
             this.textBoxBrightness.TextChanged += new System.EventHandler(this.textBoxBrightness_TextChanged);
@@ -228,11 +232,11 @@
             // 
             this.trackBarBrightness.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarBrightness.Dock = System.Windows.Forms.DockStyle.Left;
-            this.trackBarBrightness.Location = new System.Drawing.Point(3, 16);
+            this.trackBarBrightness.Location = new System.Drawing.Point(3, 20);
             this.trackBarBrightness.Maximum = 255;
             this.trackBarBrightness.Minimum = -255;
             this.trackBarBrightness.Name = "trackBarBrightness";
-            this.trackBarBrightness.Size = new System.Drawing.Size(288, 26);
+            this.trackBarBrightness.Size = new System.Drawing.Size(288, 22);
             this.trackBarBrightness.TabIndex = 6;
             this.trackBarBrightness.Scroll += new System.EventHandler(this.trackBarBrightness_Scroll);
             // 
@@ -241,6 +245,7 @@
             this.groupBox3.Controls.Add(this.label1);
             this.groupBox3.Controls.Add(this.textBoxContrast);
             this.groupBox3.Controls.Add(this.trackBarContrast);
+            this.groupBox3.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox3.Location = new System.Drawing.Point(12, 258);
             this.groupBox3.Name = "groupBox3";
             this.groupBox3.Size = new System.Drawing.Size(332, 45);
@@ -252,19 +257,19 @@
             // 
             this.label1.AutoSize = true;
             this.label1.Dock = System.Windows.Forms.DockStyle.Left;
-            this.label1.Location = new System.Drawing.Point(317, 16);
+            this.label1.Location = new System.Drawing.Point(317, 20);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(15, 13);
+            this.label1.Size = new System.Drawing.Size(14, 15);
             this.label1.TabIndex = 9;
             this.label1.Text = "%";
             // 
             // textBoxContrast
             // 
             this.textBoxContrast.Dock = System.Windows.Forms.DockStyle.Left;
-            this.textBoxContrast.Location = new System.Drawing.Point(291, 16);
+            this.textBoxContrast.Location = new System.Drawing.Point(291, 20);
             this.textBoxContrast.MaxLength = 3;
             this.textBoxContrast.Name = "textBoxContrast";
-            this.textBoxContrast.Size = new System.Drawing.Size(26, 20);
+            this.textBoxContrast.Size = new System.Drawing.Size(26, 24);
             this.textBoxContrast.TabIndex = 8;
             this.textBoxContrast.Text = "0";
             this.textBoxContrast.TextChanged += new System.EventHandler(this.textBoxContrast_TextChanged);
@@ -274,11 +279,11 @@
             // 
             this.trackBarContrast.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarContrast.Dock = System.Windows.Forms.DockStyle.Left;
-            this.trackBarContrast.Location = new System.Drawing.Point(3, 16);
+            this.trackBarContrast.Location = new System.Drawing.Point(3, 20);
             this.trackBarContrast.Maximum = 99;
             this.trackBarContrast.Minimum = -99;
             this.trackBarContrast.Name = "trackBarContrast";
-            this.trackBarContrast.Size = new System.Drawing.Size(288, 26);
+            this.trackBarContrast.Size = new System.Drawing.Size(288, 22);
             this.trackBarContrast.TabIndex = 7;
             this.trackBarContrast.Scroll += new System.EventHandler(this.trackBarContrast_Scroll);
             // 
@@ -286,6 +291,7 @@
             // 
             this.groupBox4.Controls.Add(this.textBoxSaturation);
             this.groupBox4.Controls.Add(this.trackBarSaturation);
+            this.groupBox4.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox4.Location = new System.Drawing.Point(12, 309);
             this.groupBox4.Name = "groupBox4";
             this.groupBox4.Size = new System.Drawing.Size(332, 45);
@@ -296,10 +302,10 @@
             // textBoxSaturation
             // 
             this.textBoxSaturation.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxSaturation.Location = new System.Drawing.Point(291, 22);
+            this.textBoxSaturation.Location = new System.Drawing.Point(291, 18);
             this.textBoxSaturation.MaxLength = 4;
             this.textBoxSaturation.Name = "textBoxSaturation";
-            this.textBoxSaturation.Size = new System.Drawing.Size(38, 20);
+            this.textBoxSaturation.Size = new System.Drawing.Size(38, 24);
             this.textBoxSaturation.TabIndex = 9;
             this.textBoxSaturation.Text = "0";
             this.textBoxSaturation.TextChanged += new System.EventHandler(this.textBoxSaturation_TextChanged);
@@ -309,11 +315,11 @@
             // 
             this.trackBarSaturation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarSaturation.Dock = System.Windows.Forms.DockStyle.Left;
-            this.trackBarSaturation.Location = new System.Drawing.Point(3, 16);
+            this.trackBarSaturation.Location = new System.Drawing.Point(3, 20);
             this.trackBarSaturation.Maximum = 255;
             this.trackBarSaturation.Minimum = -255;
             this.trackBarSaturation.Name = "trackBarSaturation";
-            this.trackBarSaturation.Size = new System.Drawing.Size(288, 26);
+            this.trackBarSaturation.Size = new System.Drawing.Size(288, 22);
             this.trackBarSaturation.TabIndex = 8;
             this.trackBarSaturation.Scroll += new System.EventHandler(this.trackBarSaturation_Scroll);
             // 
@@ -321,6 +327,7 @@
             // 
             this.groupBox5.Controls.Add(this.textBoxGamma);
             this.groupBox5.Controls.Add(this.trackBarGamma);
+            this.groupBox5.Font = new System.Drawing.Font("Lucida Sans Unicode", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox5.Location = new System.Drawing.Point(12, 155);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Size = new System.Drawing.Size(332, 46);
@@ -331,10 +338,10 @@
             // textBoxGamma
             // 
             this.textBoxGamma.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBoxGamma.Location = new System.Drawing.Point(291, 23);
+            this.textBoxGamma.Location = new System.Drawing.Point(291, 19);
             this.textBoxGamma.MaxLength = 4;
             this.textBoxGamma.Name = "textBoxGamma";
-            this.textBoxGamma.Size = new System.Drawing.Size(38, 20);
+            this.textBoxGamma.Size = new System.Drawing.Size(38, 24);
             this.textBoxGamma.TabIndex = 8;
             this.textBoxGamma.Text = "0";
             this.textBoxGamma.TextChanged += new System.EventHandler(this.textBoxGamma_TextChanged);
@@ -344,10 +351,10 @@
             // 
             this.trackBarGamma.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarGamma.Dock = System.Windows.Forms.DockStyle.Left;
-            this.trackBarGamma.Location = new System.Drawing.Point(3, 16);
+            this.trackBarGamma.Location = new System.Drawing.Point(3, 20);
             this.trackBarGamma.Maximum = 100;
             this.trackBarGamma.Name = "trackBarGamma";
-            this.trackBarGamma.Size = new System.Drawing.Size(288, 27);
+            this.trackBarGamma.Size = new System.Drawing.Size(288, 23);
             this.trackBarGamma.TabIndex = 6;
             this.trackBarGamma.Scroll += new System.EventHandler(this.trackBarGamma_Scroll);
             // 

@@ -11,6 +11,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
 using System.Resources;
+using System.Globalization;
 
 namespace GraphicEditor
 {
@@ -50,7 +51,7 @@ namespace GraphicEditor
         Pen pencil1, pencil2, eraser;        
         int penSize;
         Point drawingStartPos, drawingEndPos;
-        bool drawingMode;
+        bool drawingMode, creatingNew = false;
         SolidBrush figureBackgroundBrush;
         FillingMode fillingMode;
 
@@ -58,14 +59,21 @@ namespace GraphicEditor
         Color activeButtonColor = SystemColors.ActiveCaption;
         Color notActiveButtonColor = SystemColors.Control;
 
-        void ClearMainWindow()
+        void ClearMainWindow(Size? picSize)
         {
-            currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
+            if (picSize.HasValue)
+            {
+                currentImage = new Bitmap(picSize.Value.Width, picSize.Value.Height);
+            }
+            else
+            {
+                currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
+            }
             graphics = Graphics.FromImage(currentImage);
             pictureBoxMain.Image = currentImage;
             graphics.Clear(Color.White);
         }
-
+        
         /// <summary>
         /// активируем (изменяем цвет) выбранный инструмент, тот который был выбран ранее - деактивируем
         /// </summary>
@@ -129,6 +137,11 @@ namespace GraphicEditor
         public FormEditor(string[] arg)
         {
             InitializeComponent();
+            
+            CultureInfo ci = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+
             Preparing();
             OpenFile(arg[0]);
         }
@@ -143,7 +156,7 @@ namespace GraphicEditor
         {
             WindowState = FormWindowState.Maximized;
 
-            ClearMainWindow();
+            ClearMainWindow(null);
 
             color1 = Color.Black;
             color2 = Color.White;
@@ -181,7 +194,17 @@ namespace GraphicEditor
 
         private void создатьToolStripButton_Click(object sender, EventArgs e)
         {
-            ClearMainWindow();
+            var dlgResult = MessageBox.Show("Do you want to save changes in current picture?", "Want to save?", MessageBoxButtons.YesNoCancel);
+
+            if (dlgResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                creatingNew = true;
+                сохранитьToolStripButton_Click(new object(), new EventArgs());                
+            }
+            else if (dlgResult == System.Windows.Forms.DialogResult.No)
+            {
+                CreateNew();
+            }                       
         }
 
         private void открытьToolStripButton_Click(object sender, EventArgs e)
@@ -192,6 +215,16 @@ namespace GraphicEditor
                 OpenFile(openFileDialog1.FileName);
                 saveFileDialog1.FileName = openFileDialog1.FileName;
             }
+        }
+
+        private void CreateNew()
+        {
+            CreateNewForm CNF = new CreateNewForm();
+            CNF.ShowInTaskbar = false;
+            if (CNF.ShowDialog() == DialogResult.OK)
+            {
+                ClearMainWindow(CNF.GetPicSize());
+            }  
         }
 
         private void OpenFile(string fileName)
@@ -231,6 +264,11 @@ namespace GraphicEditor
                             break;
                         }
                 }
+            }
+            if (creatingNew)
+            {
+                CreateNew();
+                creatingNew = false;
             }
         }
 
@@ -517,6 +555,7 @@ namespace GraphicEditor
         private void colorCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormColorCorrection formColorCorrection = new FormColorCorrection();
+            formColorCorrection.ShowInTaskbar = false;
             formColorCorrection.SetPicture(currentImage);
             
             if (formColorCorrection.ShowDialog() == DialogResult.OK)
@@ -527,7 +566,21 @@ namespace GraphicEditor
 
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pictureBoxMain.Image = ImageEditor.ToGrayscale((Bitmap) currentImage);
+            pictureBoxMain.Image = ImageEditor.ToGrayscale((Bitmap) currentImage);            
+        }
+
+        private void FormEditor_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            var dlgResult = MessageBox.Show("Do you want to save changes in current picture?", "Want to save?", MessageBoxButtons.YesNoCancel);
+
+            if (dlgResult == System.Windows.Forms.DialogResult.Yes)
+            {
+                сохранитьToolStripButton_Click(new object(), new EventArgs());
+            }
+            else if (dlgResult == System.Windows.Forms.DialogResult.Cancel)
+            {
+                e.Cancel = true;
+            } 
         }
     }
 }
