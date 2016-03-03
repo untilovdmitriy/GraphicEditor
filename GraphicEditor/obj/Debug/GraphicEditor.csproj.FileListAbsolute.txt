@@ -15,3 +15,13 @@ E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormEditor.r
 E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.Properties.Resources.resources
 E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.csproj.GenerateResource.Cache
 E:\Универ\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormColorCorrection.resources
+M:\GIT\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.exe.config
+M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.exe
+M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.pdb
+M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.csprojResolveAssemblyReference.cache
+M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormEditor.resources
+M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormColorCorrection.resources
+M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.Properties.Resources.resources
+M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.csproj.GenerateResource.Cache
+M:\GIT\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.exe
+M:\GIT\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.pdb

@@ -483,5 +483,10 @@ namespace GraphicEditor
                 pictureBoxMain.Image = formColorCorrection.GetPicture();
             }           
         }
+
+        private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            pictureBoxMain.Image = ImageEditor.ToGrayscale((Bitmap) currentImage);
+        }
     }
 }

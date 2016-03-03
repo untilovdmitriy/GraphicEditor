@@ -153,5 +153,21 @@ namespace GraphicEditor
             }
             return img;
         }
+
+        public static Bitmap ToGrayscale(Bitmap bmp)
+        {
+            Bitmap img = new Bitmap(bmp);
+            for (int x = 0; x <= img.Width - 1; x++)
+            {
+                for (int y = 0; y <= img.Height - 1; y += 1)
+                {
+                    Color oldPixel = img.GetPixel(x, y);
+                    byte grayColor = ToByte((byte) (0.2125 * oldPixel.R) + (byte) (0.7154 * oldPixel.G) + (byte) (0.7154 * oldPixel.G));
+                    Color newPixel = Color.FromArgb(oldPixel.A, grayColor, grayColor, grayColor);
+                    img.SetPixel(x, y, newPixel);
+                }
+            }
+            return img;
+        }
     }
 }
