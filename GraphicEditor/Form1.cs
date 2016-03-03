@@ -59,6 +59,10 @@ namespace GraphicEditor
         Color activeButtonColor = SystemColors.ActiveCaption;
         Color notActiveButtonColor = SystemColors.Control;
 
+        bool IsMouseUp = true; // is the mouse up/down ?
+        Point MouseDownPoint; // where the mouse was clicked
+        Size ControlSize;
+
         void ClearMainWindow(Size? picSize)
         {
             if (picSize.HasValue)
@@ -354,6 +358,15 @@ namespace GraphicEditor
        
         private void pictureBoxMain_MouseDown(object sender, MouseEventArgs e)
         {
+            if ((Math.Abs(e.X - ((PictureBox)sender).Width) < 5) || (Math.Abs(e.Y - ((PictureBox)sender).Height) < 5))
+            {
+                IsMouseUp = false;
+
+                ControlSize = pictureBoxMain.Size;
+
+                MouseDownPoint = e.Location;
+            }
+
             if (activeTool != Tools.default_cursor)
             {
                 drawingStartPos = e.Location;
@@ -376,6 +389,28 @@ namespace GraphicEditor
 
         private void pictureBoxMain_MouseMove(object sender, MouseEventArgs e)
         {
+            if (!IsMouseUp)
+            {
+                pictureBoxMain.Width = ControlSize.Width + e.X - MouseDownPoint.X;
+                pictureBoxMain.Height = ControlSize.Height + e.Y - MouseDownPoint.Y;
+                
+                currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
+
+                int w = pictureBoxMain.Image.Width < pictureBoxMain.Width ? pictureBoxMain.Image.Width : pictureBoxMain.Width;
+                int h = pictureBoxMain.Image.Height < pictureBoxMain.Height ? pictureBoxMain.Image.Height : pictureBoxMain.Height;
+
+                for (int x = 0; x <= w - 1; x++)
+                {
+                    for (int y = 0; y <= h - 1; y += 1)
+                    {
+                        Color oldPixel = (pictureBoxMain.Image as Bitmap).GetPixel(x, y);
+                        currentImage.SetPixel(x, y, oldPixel);
+                    }
+                }
+
+                pictureBoxMain.Image = currentImage;
+            }
+
             toolStripStatusLabelCoordinate.Text = string.Format("X, Y: {0}, {1} px", e.X, e.Y);
 
             if (drawingMode)
@@ -403,6 +438,7 @@ namespace GraphicEditor
 
         private void pictureBoxMain_MouseUp(object sender, MouseEventArgs e)
         {
+            IsMouseUp = true;
             if (drawingMode)
             {
                 drawingEndPos = e.Location;
