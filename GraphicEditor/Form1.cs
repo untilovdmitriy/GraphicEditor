@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Threading;
+using System.Resources;
 
 namespace GraphicEditor
 {
@@ -46,7 +47,7 @@ namespace GraphicEditor
         Graphics graphics;
         Bitmap currentImage;
         Color color1, color2;
-        Pen pencil, eraser;        
+        Pen pencil1, pencil2, eraser;        
         int penSize;
         Point drawingStartPos, drawingEndPos;
         bool drawingMode;
@@ -83,7 +84,7 @@ namespace GraphicEditor
         /// <param name="tool"></param>
         /// <param name="newColor"></param>
         public void ActivateOrDeactivateTool(Tools tool, Color newColor)
-        {
+        {            
             switch (tool)
             {
                 case Tools.default_cursor:
@@ -94,13 +95,13 @@ namespace GraphicEditor
                     }
                 case Tools.pencil:
                     {
-                        this.Cursor = new Cursor("..\\..\\Resources\\pencil.cur");
+                        this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.pencil));
                         toolStripButtonPencil.BackColor = newColor;
                         break;
                     }
                 case Tools.eraser:
                     {
-                        this.Cursor = new Cursor("..\\..\\Resources\\eraser.cur");
+                        this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.eraser));
                         toolStripButtonEraser.BackColor = newColor;
                         break;
                     }
@@ -147,9 +148,14 @@ namespace GraphicEditor
             color1 = Color.Black;
             color2 = Color.White;
             penSize = 1;
-            pencil = new Pen(color1, penSize);
-            pencil.EndCap = System.Drawing.Drawing2D.LineCap.Round;
-            pencil.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+            pencil1 = new Pen(color1, penSize);
+            pencil1.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+            pencil1.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+
+            pencil2 = new Pen(color2, penSize);
+            pencil2.EndCap = System.Drawing.Drawing2D.LineCap.Round;
+            pencil2.StartCap = System.Drawing.Drawing2D.LineCap.Round;
+
             eraser = new Pen(color2, penSize);
             eraser.EndCap = System.Drawing.Drawing2D.LineCap.Square;
             eraser.StartCap = System.Drawing.Drawing2D.LineCap.Square;
@@ -180,9 +186,11 @@ namespace GraphicEditor
 
         private void открытьToolStripButton_Click(object sender, EventArgs e)
         {
+            openFileDialog1.FileName = "";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                OpenFile(openFileDialog1.FileName);                
+            {                
+                OpenFile(openFileDialog1.FileName);
+                saveFileDialog1.FileName = openFileDialog1.FileName;
             }
         }
 
@@ -276,7 +284,7 @@ namespace GraphicEditor
             {
                 toolStripButtonColor1.BackColor = colorDialog1.Color;
                 color1 = colorDialog1.Color;
-                pencil.Color = color1;
+                pencil1.Color = color1;
 
                 if (colorDialog1.Color == Color.White) toolStripButtonColor1.ForeColor = Color.Black;
                 if (colorDialog1.Color == Color.Black) toolStripButtonColor1.ForeColor = Color.White;
@@ -290,6 +298,7 @@ namespace GraphicEditor
                 toolStripButtonColor2.BackColor = colorDialog1.Color;
                 color2 = colorDialog1.Color;
                 eraser.Color = color2;
+                pencil2.Color = color2;
                 figureBackgroundBrush.Color = color2;
 
                 if (colorDialog1.Color == Color.White) toolStripButtonColor2.ForeColor = Color.Black;
@@ -311,11 +320,15 @@ namespace GraphicEditor
             {
                 drawingStartPos = e.Location;
                 graphics = Graphics.FromImage(pictureBoxMain.Image);
-                if (activeTool == Tools.pencil)
+                if (activeTool == Tools.pencil && e.Button == MouseButtons.Left)
                 {
-                    graphics.DrawLine(pencil, drawingStartPos.X, drawingStartPos.Y, drawingStartPos.X - 1, drawingStartPos.Y);
+                    graphics.DrawLine(pencil1, drawingStartPos.X, drawingStartPos.Y, drawingStartPos.X - 1, drawingStartPos.Y);
                 }
-                if (activeTool == Tools.eraser)
+                else if (activeTool == Tools.pencil && e.Button == MouseButtons.Right)
+                {
+                    graphics.DrawLine(pencil2, drawingStartPos.X, drawingStartPos.Y, drawingStartPos.X - 1, drawingStartPos.Y);
+                }
+                else if (activeTool == Tools.eraser && e.Button == MouseButtons.Left)
                 {
                     graphics.DrawLine(eraser, drawingStartPos.X, drawingStartPos.Y, drawingStartPos.X - 1, drawingStartPos.Y);
                 }
@@ -332,11 +345,15 @@ namespace GraphicEditor
                 graphics = Graphics.FromImage(pictureBoxMain.Image);
                 if (activeTool == Tools.pencil || activeTool == Tools.eraser)
                 {
-                    if (activeTool == Tools.pencil)
+                    if (activeTool == Tools.pencil && e.Button == MouseButtons.Left)
                     {
-                        graphics.DrawLine(pencil, drawingStartPos, e.Location);
+                        graphics.DrawLine(pencil1, drawingStartPos, e.Location);
                     }
-                    else
+                    else if (activeTool == Tools.pencil && e.Button == MouseButtons.Right)
+                    {
+                        graphics.DrawLine(pencil2, drawingStartPos, e.Location);
+                    }
+                    else if (activeTool == Tools.eraser && e.Button == MouseButtons.Left)
                     {
                         graphics.DrawLine(eraser, drawingStartPos, e.Location);
                     }                    
@@ -363,12 +380,26 @@ namespace GraphicEditor
                 {
                     case Tools.line:
                         {
-                            graphics.DrawLine(pencil, drawingStartPos, drawingEndPos);
+                            if (e.Button == MouseButtons.Left)
+                            {
+                                graphics.DrawLine(pencil1, drawingStartPos, drawingEndPos);
+                            }
+                            else if (e.Button == MouseButtons.Right)
+                            {
+                                graphics.DrawLine(pencil2, drawingStartPos, drawingEndPos);
+                            }
                             break;
                         }
                     case Tools.ellipse:
                         {
-                            graphics.DrawEllipse(pencil, drawingPosX, drawingPosY, figureWidth, figureHeight);
+                            if (e.Button == MouseButtons.Left)
+                            {
+                                graphics.DrawEllipse(pencil1, drawingPosX, drawingPosY, figureWidth, figureHeight);
+                            }
+                            else if (e.Button == MouseButtons.Right)
+                            {
+                                graphics.DrawEllipse(pencil2, drawingPosX, drawingPosY, figureWidth, figureHeight);
+                            }                            
                             if (fillingMode == FillingMode.solid_color)
                             {
                                 graphics.FillEllipse(figureBackgroundBrush, drawingPosX + outerShift, drawingPosY + outerShift, figureWidth - innerCircleShift, figureHeight - innerCircleShift);
@@ -377,7 +408,14 @@ namespace GraphicEditor
                         }
                     case Tools.rectangle:
                         {
-                            graphics.DrawRectangle(pencil, drawingPosX, drawingPosY, figureWidth, figureHeight);
+                            if (e.Button == MouseButtons.Left)
+                            {
+                                graphics.DrawRectangle(pencil1, drawingPosX, drawingPosY, figureWidth, figureHeight);
+                            }
+                            else if (e.Button == MouseButtons.Right)
+                            {
+                                graphics.DrawRectangle(pencil2, drawingPosX, drawingPosY, figureWidth, figureHeight);
+                            }                             
                             if (fillingMode == FillingMode.solid_color)
                             {
                                 graphics.FillRectangle(figureBackgroundBrush, drawingPosX + outerShift, drawingPosY + outerShift, figureWidth - penSize, figureHeight - penSize);
@@ -402,7 +440,8 @@ namespace GraphicEditor
             try
             {
                 penSize = int.Parse(toolStripTextBoxPenSize.Text);
-                pencil.Width = penSize;
+                pencil1.Width = penSize;
+                pencil2.Width = penSize;
                 eraser.Width = penSize;
             }
             catch (FormatException)
@@ -418,6 +457,10 @@ namespace GraphicEditor
         /// <param name="e"></param>
         private void toolStripTextBoxPenSize_KeyPress(object sender, KeyPressEventArgs e)
         {
+            if (e.KeyChar == '0' && ((ToolStripTextBox) sender).Text.Length <= 0)
+            {
+                e.Handled = true;
+            }
             if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
             {
                 e.Handled = true;
@@ -470,8 +513,6 @@ namespace GraphicEditor
 
             backgroundWorker1.RunWorkerAsync(); 
         }
-
-
 
         private void colorCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
         {

@@ -1,0 +1,13 @@
+M:\GIT\GraphicEditor\GraphicEditor\bin\Release\GraphicEditor.exe.config
+M:\GIT\GraphicEditor\GraphicEditor\bin\Release\GraphicEditor.exe.manifest
+M:\GIT\GraphicEditor\GraphicEditor\bin\Release\GraphicEditor.application
+M:\GIT\GraphicEditor\GraphicEditor\bin\Release\GraphicEditor.exe
+M:\GIT\GraphicEditor\GraphicEditor\bin\Release\GraphicEditor.pdb
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.FormEditor.resources
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.FormColorCorrection.resources
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.Properties.Resources.resources
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.csproj.GenerateResource.Cache
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.exe.manifest
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.application
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.exe
+M:\GIT\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.pdb

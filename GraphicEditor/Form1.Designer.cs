@@ -17,7 +17,8 @@
             {
                 graphics.Dispose();
                 currentImage.Dispose();
-                pencil.Dispose();
+                pencil1.Dispose();
+                pencil2.Dispose();
                 eraser.Dispose();
                 figureBackgroundBrush.Dispose();      
                 components.Dispose();
@@ -45,6 +46,7 @@
             this.inversionNegativeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMainTools = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonCursorDefault = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -73,7 +75,6 @@
             this.toolStripStatusLabelSizeImg = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
             this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
-            this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripFile.SuspendLayout();
             this.toolStripMainTools.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -179,6 +180,13 @@
             this.blurToolStripMenuItem.Name = "blurToolStripMenuItem";
             this.blurToolStripMenuItem.Size = new System.Drawing.Size(95, 22);
             this.blurToolStripMenuItem.Text = "Blur";
+            // 
+            // grayscaleToolStripMenuItem
+            // 
+            this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
+            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.grayscaleToolStripMenuItem.Text = "Grayscale";
+            this.grayscaleToolStripMenuItem.Click += new System.EventHandler(this.grayscaleToolStripMenuItem_Click);
             // 
             // toolStripMainTools
             // 
@@ -355,10 +363,6 @@
             this.toolStripTextBoxPenSize.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.toolStripTextBoxPenSize_KeyPress);
             this.toolStripTextBoxPenSize.TextChanged += new System.EventHandler(this.toolStripTextBoxPenSize_TextChanged);
             // 
-            // openFileDialog1
-            // 
-            this.openFileDialog1.FileName = "openFileDialog1";
-            // 
             // panel1
             // 
             this.panel1.AutoScroll = true;
@@ -421,13 +425,6 @@
             this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
             this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
             this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            // 
-            // grayscaleToolStripMenuItem
-            // 
-            this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
-            this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.grayscaleToolStripMenuItem.Text = "Grayscale";
-            this.grayscaleToolStripMenuItem.Click += new System.EventHandler(this.grayscaleToolStripMenuItem_Click);
             // 
             // FormEditor
             // 
