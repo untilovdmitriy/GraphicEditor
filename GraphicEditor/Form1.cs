@@ -16,17 +16,35 @@ using System.Globalization;
 namespace GraphicEditor
 {
     /// <summary>
-    /// Написать простенький графический редактор (на WinForms), в котором будут следующие инструменты: 
-    /// карандаш (произвольное рисование), 
-    /// прямая линия, 
-    /// прямоугольник и круг. 
+    /// Написать графический редактор, в котором будут следующие инструменты: 
+    /// - карандаш (произвольное рисование)
+    /// - ластик
+    /// - прямая линия
+    /// - прямоугольник и круг
     /// Редактор должен поддерживать такие возможности:
-    /// - Возможность задавать цвет объекта и фон объекта (для прямоугольник и круга).
-    /// - Сохранение рисунка в файл и его загрузка.
-    /// - Инвертирование рисунка (в принципе любая операция над рисунком, главное, 
-    /// что она должна выполняться в фоновом потоке + отображать прогресс выполнения (замедлить если сильно быстро)).
+    /// - выбор 2х цветов, для карандаша, 1м рисует по ЛКМ, 2м цветом - ПКМ, 
+    /// - ластик использует цвет2,
+    /// - выбор режимов заливки для фигур (с заливкой и без)
+    /// - при рисовании фигур, для границ используется цвет1, для внутренней заливки - цвет2
+    /// - создание нового изображения (возможность задать его размер)
+    /// - загрузка изображения из файла
+    /// - сохранение изображения в файл в форматах JPEG/PNG/GIF/BMP
+    /// - возврат к предыдущему состоянию, отмена последнего действия
+    /// - возрат к последнему действию, если был возрат к предыдущему
+    /// 
+    /// - Инвертирование рисунка (негатив)
+    /// - Перевод черно-белый режим
+    /// - Цветовая коррекция:
+    ///   - гамма
+    ///   - яркость
+    ///   - контрастность
+    ///   - насыщенность
+    /// - Цветовой баланс (R,G,B каналы)
     /// </summary>
 
+    /// <summary>
+    /// перечисление для выбора инструментов
+    /// </summary>
     public enum Tools
     {
         default_cursor,
@@ -37,23 +55,26 @@ namespace GraphicEditor
         rectangle
     }
 
+    /// <summary>
+    /// перечисление для режимов заливки фигуры
+    /// </summary>
     public enum FillingMode
     {
-        without_filling,
-        solid_color
+        without_filling, 
+        solid_color 
     }
 
     public partial class FormEditor : Form
     {
         Graphics graphics;
-        Bitmap currentImage;
-        Color color1, color2;
-        Pen pencil1, pencil2, eraser;        
-        int penSize;
-        Point drawingStartPos, drawingEndPos;
-        bool drawingMode, creatingNew = false;
-        SolidBrush figureBackgroundBrush;
-        FillingMode fillingMode;
+        Bitmap currentImage, undoImage, redoImage;
+        Pen pencil1, pencil2, eraser; //карандаш1 - рисует ЛКМ, карандаш2 - ПКМ, ластик (только ЛКМ)
+        Color color1, color2; //цвета, которые соответсвуют карандашам
+        int penSize; //размер кисти
+        Point drawingStartPos, drawingEndPos; //позиции мыши для рисования
+        bool drawingMode, creatingNew = false; //индикаторы для режимов рисования и режима создания нового изображения
+        SolidBrush figureBackgroundBrush; //кисть для заливки фигуры
+        FillingMode fillingMode; //индикатор для режимма заливки
 
         Tools activeTool, oldActiveTool;
         Color activeButtonColor = SystemColors.ActiveCaption;
@@ -63,19 +84,31 @@ namespace GraphicEditor
         Point MouseDownPoint; // where the mouse was clicked
         Size ControlSize;
 
+        /// <summary>
+        /// очистка изображения
+        /// </summary>
+        /// <param name="picSize">задаем его размер (необязательно, размер установится согласно предыдущему размеру по умолчанию)</param>
         void ClearMainWindow(Size? picSize)
         {
             if (picSize.HasValue)
             {
+                if (currentImage != null) undoImage = new Bitmap(currentImage);
+                else undoImage = new Bitmap(picSize.Value.Width, picSize.Value.Height);
+
                 currentImage = new Bitmap(picSize.Value.Width, picSize.Value.Height);
             }
             else
             {
+                if (currentImage != null) undoImage = new Bitmap(currentImage);
+                else undoImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
+
                 currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
             }
             graphics = Graphics.FromImage(currentImage);
             pictureBoxMain.Image = currentImage;
             graphics.Clear(Color.White);
+
+            redoImage = new Bitmap(currentImage);
         }
         
         /// <summary>
@@ -138,27 +171,43 @@ namespace GraphicEditor
             }
         }
 
+        /// <summary>
+        /// конструктор для открытия изображений из вне, т.е. по двойному клику на изображение 
+        /// </summary>
+        /// <param name="arg"></param>
         public FormEditor(string[] arg)
         {
             InitializeComponent();
-            
-            CultureInfo ci = new CultureInfo("en-US");
-            Thread.CurrentThread.CurrentCulture = ci;
-            Thread.CurrentThread.CurrentUICulture = ci;
 
+            ChangeCultureInfo();
             Preparing();
             OpenFile(arg[0]);
         }
 
         public FormEditor()
-        {
+        {  
             InitializeComponent();
+
+            ChangeCultureInfo();
             Preparing();           
         }
 
+        /// <summary>
+        /// смена локализации на англ.
+        /// </summary>
+        void ChangeCultureInfo()
+        {
+            CultureInfo ci = new CultureInfo("en-US");
+            Thread.CurrentThread.CurrentCulture = ci;
+            Thread.CurrentThread.CurrentUICulture = ci;
+        }
+
+        /// <summary>
+        /// подготовительные действия, инициализация переменных и пр.
+        /// </summary>
         private void Preparing()
         {
-            WindowState = FormWindowState.Maximized;
+            WindowState = FormWindowState.Maximized; //разворачиваем приложение на весь экран
 
             ClearMainWindow(null);
 
@@ -196,6 +245,9 @@ namespace GraphicEditor
             saveFileDialog1.Filter += "Jpeg (*.jpeg) |*.jpeg| Bmp (*.bmp)|*.bmp|Png (*.png)|*.png| Gif (*.gif)|*.gif";
         }
 
+        /// <summary>
+        /// запрос на сохранение результатов и вызов окна для создания изображения
+        /// </summary>
         private void создатьToolStripButton_Click(object sender, EventArgs e)
         {
             var dlgResult = MessageBox.Show("Do you want to save changes in current picture?", "Want to save?", MessageBoxButtons.YesNoCancel);
@@ -211,6 +263,9 @@ namespace GraphicEditor
             }                       
         }
 
+        /// <summary>
+        /// загрузка изображения из файла
+        /// </summary>
         private void открытьToolStripButton_Click(object sender, EventArgs e)
         {
             openFileDialog1.FileName = "";
@@ -221,6 +276,9 @@ namespace GraphicEditor
             }
         }
 
+        /// <summary>
+        /// вызов окна для ввода размера изображения при его создании
+        /// </summary>
         private void CreateNew()
         {
             CreateNewForm CNF = new CreateNewForm();
@@ -231,15 +289,25 @@ namespace GraphicEditor
             }  
         }
 
+        /// <summary>
+        /// ф-я для загрузки изображения из файла
+        /// </summary>
         private void OpenFile(string fileName)
         {
+            undoImage = currentImage;
+
             currentImage = new Bitmap(Image.FromFile(openFileDialog1.FileName));
             pictureBoxMain.Image = currentImage;
             graphics = Graphics.FromImage(currentImage);
 
             toolStripStatusLabelSizeImg.Text = string.Format("Size: {0} x {1} px", pictureBoxMain.Image.Size.Width, pictureBoxMain.Image.Size.Height);
+            
+            redoImage = currentImage;
         }
 
+        /// <summary>
+        /// сохранение изображения в файл в форматах jpeg/gif/png/bmp
+        /// </summary>
         private void сохранитьToolStripButton_Click(object sender, EventArgs e)
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -276,36 +344,57 @@ namespace GraphicEditor
             }
         }
 
+        /// <summary>
+        /// активация инструмента "обычный курсор"
+        /// </summary>
         private void toolStripButtonCursorDefault_Click(object sender, EventArgs e)
         {
             ActivateTool(Tools.default_cursor);
         }
 
+        /// <summary>
+        /// активация инструмента "карандаш"
+        /// </summary>
         private void toolStripButtonPencil_Click(object sender, EventArgs e)
         {
             ActivateTool(Tools.pencil);
         }
 
+        /// <summary>
+        /// активация инструмента "ластик"
+        /// </summary>
         private void toolStripButtonEraser_Click(object sender, EventArgs e)
         {
             ActivateTool(Tools.eraser);
         }
 
+        /// <summary>
+        /// активация инструмента "линия"
+        /// </summary>
         private void toolStripButtonLine_Click(object sender, EventArgs e)
         {
             ActivateTool(Tools.line);
         }
 
+        /// <summary>
+        /// активация инструмента "эллипс"
+        /// </summary>
         private void toolStripButtonEllipse_Click(object sender, EventArgs e)
         {
             ActivateTool(Tools.ellipse);
         }
 
+        /// <summary>
+        /// активация инструмента "прямоугольник"
+        /// </summary>
         private void toolStripButtonRectangle_Click(object sender, EventArgs e)
         {
             ActivateTool(Tools.rectangle);
         }
 
+        /// <summary>
+        /// переключение на режим без заливки фигуры
+        /// </summary>
         private void withoutFillingToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (solidColorToolStripMenuItem.Checked) solidColorToolStripMenuItem.Checked = false;
@@ -313,6 +402,9 @@ namespace GraphicEditor
             fillingMode = FillingMode.without_filling;
         }
 
+        /// <summary>
+        /// переключение на режим заливки фигуры
+        /// </summary>
         private void solidColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!solidColorToolStripMenuItem.Checked) solidColorToolStripMenuItem.Checked = true;
@@ -320,6 +412,9 @@ namespace GraphicEditor
             fillingMode = FillingMode.solid_color;
         }
 
+        /// <summary>
+        /// смена цвета1
+        /// </summary>
         private void toolStripButtonColor1_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -333,6 +428,9 @@ namespace GraphicEditor
             }
         }
 
+        /// <summary>
+        /// смена цвета2
+        /// </summary>
         private void toolStripButtonColor2_Click(object sender, EventArgs e)
         {
             if (colorDialog1.ShowDialog() == DialogResult.OK)
@@ -360,15 +458,17 @@ namespace GraphicEditor
         {
             if ((Math.Abs(e.X - ((PictureBox)sender).Width) < 5) || (Math.Abs(e.Y - ((PictureBox)sender).Height) < 5))
             {
+                undoImage = currentImage.Clone() as Bitmap;
+
                 IsMouseUp = false;
-
                 ControlSize = pictureBoxMain.Size;
-
                 MouseDownPoint = e.Location;
-            }
+            }            
 
             if (activeTool != Tools.default_cursor)
             {
+                undoImage = currentImage.Clone() as Bitmap;
+
                 drawingStartPos = e.Location;
                 graphics = Graphics.FromImage(pictureBoxMain.Image);
                 if (activeTool == Tools.pencil && e.Button == MouseButtons.Left)
@@ -438,7 +538,12 @@ namespace GraphicEditor
 
         private void pictureBoxMain_MouseUp(object sender, MouseEventArgs e)
         {
-            IsMouseUp = true;
+            if (!IsMouseUp)
+            {
+                IsMouseUp = true;
+                redoImage = currentImage.Clone() as Bitmap;
+            }
+
             if (drawingMode)
             {
                 drawingEndPos = e.Location;
@@ -499,6 +604,8 @@ namespace GraphicEditor
                 }          
                 pictureBoxMain.Refresh();
                 drawingMode = false;
+
+                redoImage = currentImage.Clone() as Bitmap;
             }
         }
 
@@ -507,8 +614,6 @@ namespace GraphicEditor
         /// <summary>
         /// установка размера кисти
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void toolStripTextBoxPenSize_TextChanged(object sender, EventArgs e)
         {
             try
@@ -527,8 +632,6 @@ namespace GraphicEditor
         /// <summary>
         /// оставляем для ввода в поле размера кисти только цифры 
         /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
         private void toolStripTextBoxPenSize_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (e.KeyChar == '0' && ((ToolStripTextBox) sender).Text.Length <= 0)
@@ -575,9 +678,9 @@ namespace GraphicEditor
         {
             toolStripProgressBar.Maximum = 0;
             pictureBoxMain.Image = currentImage;
+
+            redoImage = currentImage.Clone() as Bitmap;
         }
-        
-        #endregion
 
         private void inversionNegativeToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -585,9 +688,16 @@ namespace GraphicEditor
             toolStripProgressBar.Maximum = currentImage.Width * currentImage.Height;
             toolStripProgressBar.Step = currentImage.Width;
 
-            backgroundWorker1.RunWorkerAsync(); 
-        }
+            undoImage = currentImage.Clone() as Bitmap;
 
+            backgroundWorker1.RunWorkerAsync();
+        }
+        
+        #endregion       
+
+        /// <summary>
+        /// вызов окна цветовой коррекции
+        /// </summary>
         private void colorCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
             FormColorCorrection formColorCorrection = new FormColorCorrection();
@@ -596,15 +706,27 @@ namespace GraphicEditor
             
             if (formColorCorrection.ShowDialog() == DialogResult.OK)
             {
+                undoImage = currentImage.Clone() as Bitmap;
                 pictureBoxMain.Image = formColorCorrection.GetPicture();
+                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+                redoImage = currentImage.Clone() as Bitmap;
             }           
         }
 
+        /// <summary>
+        /// перевод в черно-белый
+        /// </summary>
         private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            pictureBoxMain.Image = ImageEditor.ToGrayscale((Bitmap) currentImage);            
+            undoImage = currentImage.Clone() as Bitmap;
+            pictureBoxMain.Image = ImageEditor.ToGrayscale((Bitmap) currentImage);
+            currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
+        /// <summary>
+        /// при закрытии программы выводим запрос на сохранение текущего файла
+        /// </summary>
         private void FormEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
             var dlgResult = MessageBox.Show("Do you want to save changes in current picture?", "Want to save?", MessageBoxButtons.YesNoCancel);
@@ -617,6 +739,32 @@ namespace GraphicEditor
             {
                 e.Cancel = true;
             } 
+        }
+
+        /// <summary>
+        /// возврат к предыдущему состоянию (отмена последнего действия)
+        /// </summary>
+        private void toolStripButtonRedo_Click(object sender, EventArgs e)
+        {
+            currentImage = redoImage;
+            pictureBoxMain.Image = currentImage;
+            pictureBoxMain.Refresh();
+
+            toolStripButtonRedo.Enabled = false;
+            toolStripButtonUndo.Enabled = true;
+        }
+
+        /// <summary>
+        /// возврат к последнему действию (если до этого делали возврат к предыдущему)
+        /// </summary>
+        private void toolStripButtonUndo_Click(object sender, EventArgs e)
+        {
+            currentImage = undoImage;
+            pictureBoxMain.Image = currentImage;
+            pictureBoxMain.Refresh();
+
+            toolStripButtonUndo.Enabled = false;
+            toolStripButtonRedo.Enabled = true;
         }
     }
 }

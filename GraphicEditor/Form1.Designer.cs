@@ -47,6 +47,8 @@
             this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.blurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripButtonUndo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRedo = new System.Windows.Forms.ToolStripButton();
             this.toolStripMainTools = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonCursorDefault = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -90,7 +92,9 @@
             this.открытьToolStripButton,
             this.сохранитьToolStripButton,
             this.toolStripSeparator,
-            this.toolStripDropDownButtonEdit});
+            this.toolStripDropDownButtonEdit,
+            this.toolStripButtonUndo,
+            this.toolStripButtonRedo});
             this.toolStripFile.Location = new System.Drawing.Point(0, 0);
             this.toolStripFile.Name = "toolStripFile";
             this.toolStripFile.Size = new System.Drawing.Size(1010, 25);
@@ -160,6 +164,7 @@
             this.sharpnessToolStripMenuItem.Name = "sharpnessToolStripMenuItem";
             this.sharpnessToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.sharpnessToolStripMenuItem.Text = "Sharpness";
+            this.sharpnessToolStripMenuItem.Visible = false;
             // 
             // inversionNegativeToolStripMenuItem
             // 
@@ -175,6 +180,7 @@
             this.effectsToolStripMenuItem.Name = "effectsToolStripMenuItem";
             this.effectsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.effectsToolStripMenuItem.Text = "Effects";
+            this.effectsToolStripMenuItem.Visible = false;
             // 
             // blurToolStripMenuItem
             // 
@@ -188,6 +194,26 @@
             this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.grayscaleToolStripMenuItem.Text = "Grayscale";
             this.grayscaleToolStripMenuItem.Click += new System.EventHandler(this.grayscaleToolStripMenuItem_Click);
+            // 
+            // toolStripButtonUndo
+            // 
+            this.toolStripButtonUndo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonUndo.Image = global::GraphicEditor.Properties.Resources.return_undo;
+            this.toolStripButtonUndo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonUndo.Name = "toolStripButtonUndo";
+            this.toolStripButtonUndo.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonUndo.Text = "Undo";
+            this.toolStripButtonUndo.Click += new System.EventHandler(this.toolStripButtonUndo_Click);
+            // 
+            // toolStripButtonRedo
+            // 
+            this.toolStripButtonRedo.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+            this.toolStripButtonRedo.Image = global::GraphicEditor.Properties.Resources.return_redo;
+            this.toolStripButtonRedo.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonRedo.Name = "toolStripButtonRedo";
+            this.toolStripButtonRedo.Size = new System.Drawing.Size(23, 22);
+            this.toolStripButtonRedo.Text = "Redo";
+            this.toolStripButtonRedo.Click += new System.EventHandler(this.toolStripButtonRedo_Click);
             // 
             // toolStripMainTools
             // 
@@ -499,6 +525,8 @@
         private System.Windows.Forms.ToolStripMenuItem effectsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem blurToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grayscaleToolStripMenuItem;
+        private System.Windows.Forms.ToolStripButton toolStripButtonUndo;
+        private System.Windows.Forms.ToolStripButton toolStripButtonRedo;
     }
 }
 

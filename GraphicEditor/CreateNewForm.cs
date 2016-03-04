@@ -17,22 +17,37 @@ namespace GraphicEditor
             InitializeComponent();
         }
 
+        /// <summary>
+        /// ф-я которая возвращает значения из полей для ввода размеров (ширины и высоты) создаваемого изображения
+        /// </summary>
+        /// <returns>размер (высота, ширина)</returns>
         public Size GetPicSize()
         {
             return new Size(Convert.ToInt32(textBoxHorizontal.Text), Convert.ToInt32(textBoxVertical.Text));
         }
 
+        /// <summary>
+        /// отмена, закрытие окна
+        /// </summary>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
             this.Close();
         }
 
+        /// <summary>
+        /// подтверждение создания изображения
+        /// </summary>
         private void buttonOK_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+        #region корректность ввода
+        /// <summary>
+        /// обработчики для проверки корректности ввода в поля, запрещаем все кроме цифр + проверяем размер на > 0
+        /// </summary>
 
         private void textBoxHorizontal_KeyPress(object sender, KeyPressEventArgs e)
         {
@@ -56,5 +71,7 @@ namespace GraphicEditor
                 MessageBox.Show("Incorrect size!");
             }
         }
+
+        #endregion
     }
 }

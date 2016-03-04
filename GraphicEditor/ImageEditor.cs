@@ -9,6 +9,9 @@ namespace GraphicEditor
 {
     class ImageEditor
     {
+        /// <summary>
+        /// перевод int в byte, обрезаем значение если оно больше 255
+        /// </summary>
         private static byte ToByte(int Val)
         {
             if (Val > 255) Val = 255;
@@ -16,6 +19,14 @@ namespace GraphicEditor
             return (byte)Val;
         }
 
+        #region Цветовая коррекция
+
+        /// <summary>
+        /// Гамма-коррекция
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <param name="gamma">значение гаммы</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap SetGamma(Bitmap bmp, short gamma)
         {
             Bitmap img = new Bitmap(bmp);
@@ -34,6 +45,12 @@ namespace GraphicEditor
             return img;
         }
 
+        /// <summary>
+        /// Яркость
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <param name="gamma">значение яркости</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap SetBrightness(Bitmap bmp, short brightness)
         {
             Bitmap img = new Bitmap(bmp);
@@ -52,6 +69,12 @@ namespace GraphicEditor
             return img;
         }
 
+        /// <summary>
+        /// Контрастность
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <param name="gamma">значение контрастности</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap SetContrast(Bitmap bmp, short contrast)
         {
             Bitmap img = new Bitmap(bmp);
@@ -81,6 +104,12 @@ namespace GraphicEditor
             return img;
         }
 
+        /// <summary>
+        /// Насыщенность
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <param name="gamma">значение насыщенности</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap SetSaturation(Bitmap bmp, short saturation)
         {
             Bitmap img = new Bitmap(bmp);
@@ -100,6 +129,16 @@ namespace GraphicEditor
             return img;
         }
 
+        #endregion
+
+        #region Цветовой баланс
+
+        /// <summary>
+        /// Цветовой баланс (канал R)
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <param name="gamma">значение канала R</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap SetR(Bitmap bmp, short R)
         {
             Bitmap img = new Bitmap(bmp);
@@ -118,6 +157,12 @@ namespace GraphicEditor
             return img;
         }
 
+        /// <summary>
+        /// Цветовой баланс (канал G)
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <param name="gamma">значение канала G</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap SetG(Bitmap bmp, short G)
         {
             Bitmap img = new Bitmap(bmp);
@@ -136,6 +181,12 @@ namespace GraphicEditor
             return img;
         }
 
+        /// <summary>
+        /// Цветовой баланс (канал B)
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <param name="gamma">значение канала B</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap SetB(Bitmap bmp, short B)
         {
             Bitmap img = new Bitmap(bmp);
@@ -154,6 +205,13 @@ namespace GraphicEditor
             return img;
         }
 
+        #endregion
+
+        /// <summary>
+        /// Перевод в чернобелый
+        /// </summary>
+        /// <param name="bmp">изображение для изменения</param>
+        /// <returns>измененное изображение</returns>
         public static Bitmap ToGrayscale(Bitmap bmp)
         {
             Bitmap img = new Bitmap(bmp);

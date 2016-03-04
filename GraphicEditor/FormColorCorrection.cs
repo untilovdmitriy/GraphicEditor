@@ -19,12 +19,18 @@ namespace GraphicEditor
             InitializeComponent();
         }
 
+        /// <summary>
+        /// подтверждение, применение всех изменений по цветовой коррекции
+        /// </summary>
         private void buttonApply_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
 
+        /// <summary>
+        /// отмена, закрытие окна цветовой корекции
+        /// </summary>
         private void buttonCancel_Click(object sender, EventArgs e)
         {
             this.DialogResult = DialogResult.Cancel;
@@ -77,6 +83,11 @@ namespace GraphicEditor
 
         #endregion
 
+        /// <summary>
+        /// передаем изображение из главного окна в окно миниатюры, 
+        /// для динамического отображения изменений цветовой коррекции
+        /// </summary>
+        /// <param name="img">изображение</param>
         public void SetPicture(Image img)
         {
             pictureBoxMini.SizeMode = PictureBoxSizeMode.StretchImage;
@@ -84,12 +95,16 @@ namespace GraphicEditor
             currentImage = new Bitmap(img);//, pictureBoxMini.Size);
         }
 
+        /// <summary>
+        /// возврат измененного изображения
+        /// </summary>
+        /// <returns>измененное изображения</returns>
         public Image GetPicture()
         {
             return pictureBoxMini.Image;
         }
 
-        #region TextBoxChanges
+        #region Проверка значений в полях для ввода числовых значений для цветовой коррекции
 
         private void textBoxGamma_TextChanged(object sender, EventArgs e)
         {
@@ -101,6 +116,21 @@ namespace GraphicEditor
             catch (Exception) 
             {
                 if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+            }
+        }
+
+        private void textBoxGamma_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == '-')
+            {
+                if ((((TextBox)sender).Text.Length > 0))
+                {
+                    e.Handled = true;
+                }
+            }
+            else if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
+            {
+                e.Handled = true;
             }
         }
 
@@ -183,20 +213,5 @@ namespace GraphicEditor
         }
 
         #endregion
-
-        private void textBoxGamma_KeyPress(object sender, KeyPressEventArgs e)
-        {
-            if (e.KeyChar == '-')
-            {
-                if ((((TextBox)sender).Text.Length > 0))
-                {
-                    e.Handled = true;
-                }
-            }
-            else if ((e.KeyChar <= 47 || e.KeyChar >= 58) && e.KeyChar != 8)
-            {
-                e.Handled = true;
-            }
-        }
     }
 }
