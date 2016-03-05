@@ -352,7 +352,8 @@
             this.trackBarGamma.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarGamma.Dock = System.Windows.Forms.DockStyle.Left;
             this.trackBarGamma.Location = new System.Drawing.Point(3, 20);
-            this.trackBarGamma.Maximum = 100;
+            this.trackBarGamma.Maximum = 200;
+            this.trackBarGamma.Minimum = -100;
             this.trackBarGamma.Name = "trackBarGamma";
             this.trackBarGamma.Size = new System.Drawing.Size(288, 23);
             this.trackBarGamma.TabIndex = 6;

@@ -113,7 +113,7 @@ namespace GraphicEditor
                 trackBarGamma.Value = Convert.ToInt16(((TextBox)sender).Text);
                 trackBarGamma_Scroll(trackBarGamma, e);
             }
-            catch (Exception) 
+            catch (Exception)
             {
                 if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
             }
