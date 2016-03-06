@@ -343,7 +343,7 @@
             this.textBoxGamma.Name = "textBoxGamma";
             this.textBoxGamma.Size = new System.Drawing.Size(38, 24);
             this.textBoxGamma.TabIndex = 8;
-            this.textBoxGamma.Text = "0";
+            this.textBoxGamma.Text = "100";
             this.textBoxGamma.TextChanged += new System.EventHandler(this.textBoxGamma_TextChanged);
             this.textBoxGamma.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxGamma_KeyPress);
             // 
@@ -353,10 +353,10 @@
             this.trackBarGamma.Dock = System.Windows.Forms.DockStyle.Left;
             this.trackBarGamma.Location = new System.Drawing.Point(3, 20);
             this.trackBarGamma.Maximum = 200;
-            this.trackBarGamma.Minimum = -100;
             this.trackBarGamma.Name = "trackBarGamma";
             this.trackBarGamma.Size = new System.Drawing.Size(288, 23);
             this.trackBarGamma.TabIndex = 6;
+            this.trackBarGamma.Value = 100;
             this.trackBarGamma.Scroll += new System.EventHandler(this.trackBarGamma_Scroll);
             // 
             // pictureBoxMini

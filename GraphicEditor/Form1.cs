@@ -749,9 +749,6 @@ namespace GraphicEditor
             currentImage = redoImage;
             pictureBoxMain.Image = currentImage;
             pictureBoxMain.Refresh();
-
-            toolStripButtonRedo.Enabled = false;
-            toolStripButtonUndo.Enabled = true;
         }
 
         /// <summary>
@@ -762,9 +759,6 @@ namespace GraphicEditor
             currentImage = undoImage;
             pictureBoxMain.Image = currentImage;
             pictureBoxMain.Refresh();
-
-            toolStripButtonUndo.Enabled = false;
-            toolStripButtonRedo.Enabled = true;
         }
     }
 }

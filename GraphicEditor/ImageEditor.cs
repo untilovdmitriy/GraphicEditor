@@ -36,16 +36,23 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = img.GetPixel(x, y);
-                    double r = gamma < 0 ? Math.Pow((oldPixel.R / 255.0), -gamma) * 255 : Math.Pow((oldPixel.R / 255.0), (double)gamma / 100.0) * 255;
-                    double g = gamma < 0 ? Math.Pow((oldPixel.G / 255.0), -gamma) * 255 : Math.Pow((oldPixel.G / 255.0), (double)gamma / 100.0) * 255;
-                    double b = gamma < 0 ? Math.Pow((oldPixel.B / 255.0), -gamma) * 255 : Math.Pow((oldPixel.B / 255.0), (double)gamma / 100.0) * 255;
-                    Color newPixel = Color.FromArgb(oldPixel.A,
-                        ToByte(r),
-                        ToByte(g),
-                        ToByte(b));
+
+                    byte r = gamma < 100 ? 
+                        ToByte(Math.Pow((oldPixel.R / 255.0), 100 - gamma) * 255) 
+                        : ToByte(Math.Pow((oldPixel.R / 255.0), (double) (200 - gamma) / 100) * 255);
+
+                    byte g = gamma < 100 ?
+                        ToByte(Math.Pow((oldPixel.G / 255.0), 100 - gamma) * 255)
+                        : ToByte(Math.Pow((oldPixel.G / 255.0), (double)(200 - gamma) / 100) * 255);
+
+                    byte b = gamma < 100 ?
+                        ToByte(Math.Pow((oldPixel.B / 255.0), 100 - gamma) * 255)
+                        : ToByte(Math.Pow((oldPixel.B / 255.0), (double)(200 - gamma) / 100) * 255);
+                     
+                    Color newPixel = Color.FromArgb(oldPixel.A, r, g, b);
                     img.SetPixel(x, y, newPixel);
                 }
             }
@@ -65,7 +72,7 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = img.GetPixel(x, y);
                     Color newPixel = Color.FromArgb(oldPixel.A,
@@ -89,7 +96,7 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = img.GetPixel(x, y);
                     Color newPixel = new Color();
@@ -124,7 +131,7 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
 
                     Color oldPixel = img.GetPixel(x, y);
@@ -153,7 +160,7 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = img.GetPixel(x, y);                    
                     Color newPixel = Color.FromArgb(oldPixel.A,
@@ -177,7 +184,7 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = img.GetPixel(x, y);
                     Color newPixel = Color.FromArgb(oldPixel.A,
@@ -201,7 +208,7 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = img.GetPixel(x, y);
                     Color newPixel = Color.FromArgb(oldPixel.A,
@@ -226,7 +233,7 @@ namespace GraphicEditor
             Bitmap img = new Bitmap(bmp);
             for (int x = 0; x <= img.Width - 1; x++)
             {
-                for (int y = 0; y <= img.Height - 1; y += 1)
+                for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = img.GetPixel(x, y);
                     byte grayColor = ToByte((byte) (0.3 * oldPixel.R) + (byte) (0.6 * oldPixel.G) + (byte) (0.1 * oldPixel.G));
