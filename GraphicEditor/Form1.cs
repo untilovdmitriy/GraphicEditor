@@ -134,38 +134,74 @@ namespace GraphicEditor
             {
                 case Tools.default_cursor:
                     {
-                        this.Cursor = Cursors.Default;
                         toolStripButtonCursorDefault.BackColor = newColor;
                         break;
                     }
                 case Tools.pencil:
                     {
-                        this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.pencil));
                         toolStripButtonPencil.BackColor = newColor;
                         break;
                     }
                 case Tools.eraser:
                     {
-                        this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.eraser));
                         toolStripButtonEraser.BackColor = newColor;
                         break;
                     }
                 case Tools.line:
                     {
-                        this.Cursor = Cursors.Default;
                         toolStripButtonLine.BackColor = newColor;
                         break;
                     }
                 case Tools.ellipse:
                     {
-                        this.Cursor = Cursors.Default;
                         toolStripButtonEllipse.BackColor = newColor;
                         break;
                     }
                 case Tools.rectangle:
                     {
-                        this.Cursor = Cursors.Default;
                         toolStripButtonRectangle.BackColor = newColor;
+                        break;
+                    }
+            }
+        }
+
+        public void DeactivateCursor()
+        {
+            this.Cursor = Cursors.Default;
+        }
+
+        public void ActivateCursor()
+        {
+            switch (activeTool)
+            {/*
+                case Tools.default_cursor:
+                    {
+                        this.Cursor = Cursors.Default;
+                        break;
+                    }*/
+                case Tools.pencil:
+                    {
+                        this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.pencil));
+                        break;
+                    }
+                case Tools.eraser:
+                    {
+                        this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.eraser));
+                        break;
+                    }
+                case Tools.line:
+                    {
+                        this.Cursor = Cursors.Default;
+                        break;
+                    }
+                case Tools.ellipse:
+                    {
+                        this.Cursor = Cursors.Default;
+                        break;
+                    }
+                case Tools.rectangle:
+                    {
+                        this.Cursor = Cursors.Default;
                         break;
                     }
             }
@@ -757,6 +793,16 @@ namespace GraphicEditor
             currentImage = undoImage;
             pictureBoxMain.Image = currentImage;
             pictureBoxMain.Refresh();
+        }
+
+        private void pictureBoxMain_MouseEnter(object sender, EventArgs e)
+        {
+            ActivateCursor();
+        }
+
+        private void pictureBoxMain_MouseLeave(object sender, EventArgs e)
+        {
+            DeactivateCursor();
         }
     }
 }
