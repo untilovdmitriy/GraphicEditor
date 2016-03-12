@@ -29,4 +29,3 @@ M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.exe.manifest
 M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.application
 M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.exe
 M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.pdb
-M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.csprojResolveAssemblyReference.cache

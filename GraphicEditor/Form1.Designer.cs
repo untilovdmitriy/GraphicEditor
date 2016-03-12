@@ -76,7 +76,6 @@
             this.toolStripStatusLabelCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelSizeImg = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.backgroundWorker1 = new System.ComponentModel.BackgroundWorker();
             this.toolStripFile.SuspendLayout();
             this.toolStripMainTools.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -448,13 +447,6 @@
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(350, 19);
             // 
-            // backgroundWorker1
-            // 
-            this.backgroundWorker1.WorkerReportsProgress = true;
-            this.backgroundWorker1.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker1_DoWork);
-            this.backgroundWorker1.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.backgroundWorker1_ProgressChanged);
-            this.backgroundWorker1.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundWorker1_RunWorkerCompleted);
-            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
@@ -517,7 +509,6 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel toolStripLabelPenSize;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxPenSize;
-        private System.ComponentModel.BackgroundWorker backgroundWorker1;
         private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonEdit;
         private System.Windows.Forms.ToolStripMenuItem colorCorrectionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sharpnessToolStripMenuItem;

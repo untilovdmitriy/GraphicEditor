@@ -642,39 +642,22 @@ namespace GraphicEditor
             {
                 e.Handled = true;
             }
+            
         }
 
-        #region инверсия
+        #region эффекты
 
         /// <summary>
-        /// инверсия изображения (негатив)
-        /// используем backgroundWorker1 для асинхронного вызова и отображения прогресса в toolStripProgressBar
-        /// </summary>
-        void Inversion()
-        {
-            for (int x = 0; x <= currentImage.Width - 1; x++)
-            {
-                for (int y = 0; y <= currentImage.Height - 1; y += 1)
-                {
-                    Color oldColor = currentImage.GetPixel(x, y);
-                    Color newColor = Color.FromArgb(oldColor.A, 255 - oldColor.R, 255 - oldColor.G, 255 - oldColor.B);
-                    currentImage.SetPixel(x, y, newColor);
-                }
-                backgroundWorker1.ReportProgress((x / currentImage.Width) * 100);
-            }
-        }
+        /// используем backgroundWorker1 для асинхронного вызова функций для применения єффектов инверсии, ч/б и пр.
+        /// а также отображения прогресса в toolStripProgressBar
+        /// </summary>        
 
-        private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
-        {
-            Inversion();
-        }
-
-        private void backgroundWorker1_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        private void BW_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             toolStripProgressBar.PerformStep();
         }
 
-        private void backgroundWorker1_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        private void BW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolStripProgressBar.Maximum = 0;
             pictureBoxMain.Image = currentImage;
@@ -682,7 +665,23 @@ namespace GraphicEditor
             redoImage = currentImage.Clone() as Bitmap;
         }
 
+        /// <summary>
+        /// негатив
+        /// </summary>
         private void inversionNegativeToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Effect(ImageEditor.Inversion);
+        }
+
+        /// <summary>
+        /// перевод в черно-белый
+        /// </summary>
+        private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Effect(ImageEditor.ToGrayscale);
+        }
+
+        void Effect(ImageEditor.Effect effect)
         {
             toolStripProgressBar.Minimum = 0;
             toolStripProgressBar.Maximum = currentImage.Width * currentImage.Height;
@@ -690,7 +689,17 @@ namespace GraphicEditor
 
             undoImage = currentImage.Clone() as Bitmap;
 
-            backgroundWorker1.RunWorkerAsync();
+            BackgroundWorker BW = new BackgroundWorker();
+
+            BW.WorkerReportsProgress = true;
+            BW.WorkerSupportsCancellation = true;
+            BW.DoWork += delegate(object s, DoWorkEventArgs ev)
+            {
+                ImageEditor.ApplyEffect(ref currentImage, effect, ref BW);
+            };
+            BW.ProgressChanged += BW_ProgressChanged;
+            BW.RunWorkerCompleted += BW_RunWorkerCompleted;
+            BW.RunWorkerAsync();
         }
         
         #endregion       
@@ -711,18 +720,7 @@ namespace GraphicEditor
                 currentImage = pictureBoxMain.Image.Clone() as Bitmap;
                 redoImage = currentImage.Clone() as Bitmap;
             }           
-        }
-
-        /// <summary>
-        /// перевод в черно-белый
-        /// </summary>
-        private void grayscaleToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            undoImage = currentImage.Clone() as Bitmap;
-            pictureBoxMain.Image = ImageEditor.ToGrayscale((Bitmap) currentImage);
-            currentImage = pictureBoxMain.Image.Clone() as Bitmap;
-            redoImage = currentImage.Clone() as Bitmap;
-        }
+        }        
 
         /// <summary>
         /// при закрытии программы выводим запрос на сохранение текущего файла
