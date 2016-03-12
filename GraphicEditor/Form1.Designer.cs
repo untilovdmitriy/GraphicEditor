@@ -409,6 +409,7 @@
             this.pictureBoxMain.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBoxMain.TabIndex = 3;
             this.pictureBoxMain.TabStop = false;
+            this.pictureBoxMain.SizeChanged += new System.EventHandler(this.pictureBoxMain_SizeChanged);
             this.pictureBoxMain.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxMain_MouseDown);
             this.pictureBoxMain.MouseEnter += new System.EventHandler(this.pictureBoxMain_MouseEnter);
             this.pictureBoxMain.MouseLeave += new System.EventHandler(this.pictureBoxMain_MouseLeave);

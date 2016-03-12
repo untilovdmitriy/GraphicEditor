@@ -60,8 +60,8 @@ namespace GraphicEditor
     /// </summary>
     public enum FillingMode
     {
-        without_filling, 
-        solid_color 
+        without_filling,
+        solid_color
     }
 
     public partial class FormEditor : Form
@@ -92,14 +92,14 @@ namespace GraphicEditor
         {
             if (picSize.HasValue)
             {
-                if (currentImage != null) undoImage = new Bitmap(currentImage);
+                if (currentImage != null) undoImage = currentImage.Clone() as Bitmap;
                 else undoImage = new Bitmap(picSize.Value.Width, picSize.Value.Height);
 
                 currentImage = new Bitmap(picSize.Value.Width, picSize.Value.Height);
             }
             else
             {
-                if (currentImage != null) undoImage = new Bitmap(currentImage);
+                if (currentImage != null) undoImage = currentImage.Clone() as Bitmap;
                 else undoImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
 
                 currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
@@ -108,9 +108,11 @@ namespace GraphicEditor
             pictureBoxMain.Image = currentImage;
             graphics.Clear(Color.White);
 
-            redoImage = new Bitmap(currentImage);
+            redoImage = currentImage.Clone() as Bitmap;
         }
-        
+
+        #region смена активного инструмента
+
         /// <summary>
         /// активируем (изменяем цвет) выбранный инструмент, тот который был выбран ранее - деактивируем
         /// </summary>
@@ -129,7 +131,7 @@ namespace GraphicEditor
         /// <param name="tool"></param>
         /// <param name="newColor"></param>
         public void ActivateOrDeactivateTool(Tools tool, Color newColor)
-        {            
+        {
             switch (tool)
             {
                 case Tools.default_cursor:
@@ -165,20 +167,73 @@ namespace GraphicEditor
             }
         }
 
+        /// <summary>
+        /// активация инструмента "обычный курсор"
+        /// </summary>
+        private void toolStripButtonCursorDefault_Click(object sender, EventArgs e)
+        {
+            ActivateTool(Tools.default_cursor);
+        }
+
+        /// <summary>
+        /// активация инструмента "карандаш"
+        /// </summary>
+        private void toolStripButtonPencil_Click(object sender, EventArgs e)
+        {
+            ActivateTool(Tools.pencil);
+        }
+
+        /// <summary>
+        /// активация инструмента "ластик"
+        /// </summary>
+        private void toolStripButtonEraser_Click(object sender, EventArgs e)
+        {
+            ActivateTool(Tools.eraser);
+        }
+
+        /// <summary>
+        /// активация инструмента "линия"
+        /// </summary>
+        private void toolStripButtonLine_Click(object sender, EventArgs e)
+        {
+            ActivateTool(Tools.line);
+        }
+
+        /// <summary>
+        /// активация инструмента "эллипс"
+        /// </summary>
+        private void toolStripButtonEllipse_Click(object sender, EventArgs e)
+        {
+            ActivateTool(Tools.ellipse);
+        }
+
+        /// <summary>
+        /// активация инструмента "прямоугольник"
+        /// </summary>
+        private void toolStripButtonRectangle_Click(object sender, EventArgs e)
+        {
+            ActivateTool(Tools.rectangle);
+        }
+
+        #endregion
+
+        #region смена курсора
+
+        /// <summary>
+        /// сброс курсора
+        /// </summary>
         public void DeactivateCursor()
         {
             this.Cursor = Cursors.Default;
         }
 
+        /// <summary>
+        /// выбор активного курсора
+        /// </summary>
         public void ActivateCursor()
         {
             switch (activeTool)
-            {/*
-                case Tools.default_cursor:
-                    {
-                        this.Cursor = Cursors.Default;
-                        break;
-                    }*/
+            {
                 case Tools.pencil:
                     {
                         this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.pencil));
@@ -206,6 +261,20 @@ namespace GraphicEditor
                     }
             }
         }
+        
+        private void pictureBoxMain_MouseEnter(object sender, EventArgs e)
+        {
+            ActivateCursor();
+        }
+
+        private void pictureBoxMain_MouseLeave(object sender, EventArgs e)
+        {
+            DeactivateCursor();
+        }
+
+        #endregion
+
+        #region конструкторы и подготовительные действия
 
         /// <summary>
         /// конструктор для открытия изображений из вне, т.е. по двойному клику на изображение 
@@ -221,12 +290,12 @@ namespace GraphicEditor
         }
 
         public FormEditor()
-        {  
+        {
             InitializeComponent();
 
             ChangeCultureInfo();
-            Preparing();           
-        }
+            Preparing();
+        }               
 
         /// <summary>
         /// смена локализации на англ.
@@ -281,6 +350,10 @@ namespace GraphicEditor
             saveFileDialog1.Filter += "Jpeg (*.jpeg) |*.jpeg| Bmp (*.bmp)|*.bmp|Png (*.png)|*.png| Gif (*.gif)|*.gif";
         }
 
+        #endregion
+
+        #region Создание/Загрузка/Сохранение
+
         /// <summary>
         /// запрос на сохранение результатов и вызов окна для создания изображения
         /// </summary>
@@ -291,12 +364,12 @@ namespace GraphicEditor
             if (dlgResult == System.Windows.Forms.DialogResult.Yes)
             {
                 creatingNew = true;
-                сохранитьToolStripButton_Click(new object(), new EventArgs());                
+                сохранитьToolStripButton_Click(new object(), new EventArgs());
             }
             else if (dlgResult == System.Windows.Forms.DialogResult.No)
             {
                 CreateNew();
-            }                       
+            }
         }
 
         /// <summary>
@@ -306,7 +379,7 @@ namespace GraphicEditor
         {
             openFileDialog1.FileName = "";
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
-            {                
+            {
                 OpenFile(openFileDialog1.FileName);
                 saveFileDialog1.FileName = openFileDialog1.FileName;
             }
@@ -322,7 +395,7 @@ namespace GraphicEditor
             if (CNF.ShowDialog() == DialogResult.OK)
             {
                 ClearMainWindow(CNF.GetPicSize());
-            }  
+            }
         }
 
         /// <summary>
@@ -330,15 +403,15 @@ namespace GraphicEditor
         /// </summary>
         private void OpenFile(string fileName)
         {
-            undoImage = currentImage;
+            undoImage = currentImage.Clone() as Bitmap;
 
             currentImage = new Bitmap(Image.FromFile(openFileDialog1.FileName));
-            pictureBoxMain.Image = currentImage;
+            pictureBoxMain.Image = currentImage.Clone() as Bitmap;
             graphics = Graphics.FromImage(currentImage);
 
             toolStripStatusLabelSizeImg.Text = string.Format("Size: {0} x {1} px", pictureBoxMain.Image.Size.Width, pictureBoxMain.Image.Size.Height);
-            
-            redoImage = currentImage;
+
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
         /// <summary>
@@ -380,61 +453,23 @@ namespace GraphicEditor
             }
         }
 
-        /// <summary>
-        /// активация инструмента "обычный курсор"
-        /// </summary>
-        private void toolStripButtonCursorDefault_Click(object sender, EventArgs e)
-        {
-            ActivateTool(Tools.default_cursor);
-        }
+        #endregion      
 
-        /// <summary>
-        /// активация инструмента "карандаш"
-        /// </summary>
-        private void toolStripButtonPencil_Click(object sender, EventArgs e)
-        {
-            ActivateTool(Tools.pencil);
-        }
-
-        /// <summary>
-        /// активация инструмента "ластик"
-        /// </summary>
-        private void toolStripButtonEraser_Click(object sender, EventArgs e)
-        {
-            ActivateTool(Tools.eraser);
-        }
-
-        /// <summary>
-        /// активация инструмента "линия"
-        /// </summary>
-        private void toolStripButtonLine_Click(object sender, EventArgs e)
-        {
-            ActivateTool(Tools.line);
-        }
-
-        /// <summary>
-        /// активация инструмента "эллипс"
-        /// </summary>
-        private void toolStripButtonEllipse_Click(object sender, EventArgs e)
-        {
-            ActivateTool(Tools.ellipse);
-        }
-
-        /// <summary>
-        /// активация инструмента "прямоугольник"
-        /// </summary>
-        private void toolStripButtonRectangle_Click(object sender, EventArgs e)
-        {
-            ActivateTool(Tools.rectangle);
-        }
+        #region Смена цвета и режима заливки
 
         /// <summary>
         /// переключение на режим без заливки фигуры
         /// </summary>
         private void withoutFillingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (solidColorToolStripMenuItem.Checked) solidColorToolStripMenuItem.Checked = false;
-            if (!withoutFillingToolStripMenuItem.Checked) withoutFillingToolStripMenuItem.Checked = true;
+            if (solidColorToolStripMenuItem.Checked)
+            {
+                solidColorToolStripMenuItem.Checked = false;
+            }
+            else if (!withoutFillingToolStripMenuItem.Checked)
+            {
+                withoutFillingToolStripMenuItem.Checked = true;
+            }
             fillingMode = FillingMode.without_filling;
         }
 
@@ -443,8 +478,14 @@ namespace GraphicEditor
         /// </summary>
         private void solidColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!solidColorToolStripMenuItem.Checked) solidColorToolStripMenuItem.Checked = true;
-            if (withoutFillingToolStripMenuItem.Checked) withoutFillingToolStripMenuItem.Checked = false;
+            if (!solidColorToolStripMenuItem.Checked)
+            {
+                solidColorToolStripMenuItem.Checked = true;
+            }
+            else if (withoutFillingToolStripMenuItem.Checked)
+            {
+                withoutFillingToolStripMenuItem.Checked = false;
+            }
             fillingMode = FillingMode.solid_color;
         }
 
@@ -459,8 +500,14 @@ namespace GraphicEditor
                 color1 = colorDialog1.Color;
                 pencil1.Color = color1;
 
-                if (colorDialog1.Color == Color.White) toolStripButtonColor1.ForeColor = Color.Black;
-                if (colorDialog1.Color == Color.Black) toolStripButtonColor1.ForeColor = Color.White;
+                if (colorDialog1.Color == Color.White)
+                {
+                    toolStripButtonColor1.ForeColor = Color.Black;
+                }
+                else if (colorDialog1.Color == Color.Black)
+                {
+                    toolStripButtonColor1.ForeColor = Color.White;
+                }
             }
         }
 
@@ -477,33 +524,41 @@ namespace GraphicEditor
                 pencil2.Color = color2;
                 figureBackgroundBrush.Color = color2;
 
-                if (colorDialog1.Color == Color.White) toolStripButtonColor2.ForeColor = Color.Black;
-                if (colorDialog1.Color == Color.Black) toolStripButtonColor2.ForeColor = Color.White;
+                if (colorDialog1.Color == Color.White)
+                {
+                    toolStripButtonColor2.ForeColor = Color.Black;
+                }
+                else if (colorDialog1.Color == Color.Black)
+                {
+                    toolStripButtonColor2.ForeColor = Color.White;
+                }
             }
         }
 
-        #region рисование
+        #endregion
+
+        #region рисование и изменение размера полотна
         /// <summary>
         /// рисование карандашом и затирание - в MouseDown и MouseMove,
         /// в MouseDown - запоминаем начальную координату, в MouseMove рисуем с начальной точки, в текущую.
         /// рисование фигур - в MouseDown и MouseUp,
         /// в MouseDown - запоминаем начальную координату, в MouseUp  - рисуем к фигуру к текущей точке.
         /// </summary>
-       
+
         private void pictureBoxMain_MouseDown(object sender, MouseEventArgs e)
         {
             if ((Math.Abs(e.X - ((PictureBox)sender).Width) < 5) || (Math.Abs(e.Y - ((PictureBox)sender).Height) < 5))
             {
-                undoImage = currentImage.Clone() as Bitmap;
+                undoImage = pictureBoxMain.Image.Clone() as Bitmap;
 
                 IsMouseUp = false;
                 ControlSize = pictureBoxMain.Size;
                 MouseDownPoint = e.Location;
-            }            
+            }
 
             if (activeTool != Tools.default_cursor)
             {
-                undoImage = currentImage.Clone() as Bitmap;
+                undoImage = pictureBoxMain.Image.Clone() as Bitmap;
 
                 drawingStartPos = e.Location;
                 graphics = Graphics.FromImage(pictureBoxMain.Image);
@@ -529,22 +584,6 @@ namespace GraphicEditor
             {
                 pictureBoxMain.Width = ControlSize.Width + e.X - MouseDownPoint.X;
                 pictureBoxMain.Height = ControlSize.Height + e.Y - MouseDownPoint.Y;
-                
-                currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
-
-                int w = pictureBoxMain.Image.Width < pictureBoxMain.Width ? pictureBoxMain.Image.Width : pictureBoxMain.Width;
-                int h = pictureBoxMain.Image.Height < pictureBoxMain.Height ? pictureBoxMain.Image.Height : pictureBoxMain.Height;
-
-                for (int x = 0; x <= w - 1; x++)
-                {
-                    for (int y = 0; y <= h - 1; y += 1)
-                    {
-                        Color oldPixel = (pictureBoxMain.Image as Bitmap).GetPixel(x, y);
-                        currentImage.SetPixel(x, y, oldPixel);
-                    }
-                }
-
-                pictureBoxMain.Image = currentImage;
             }
 
             toolStripStatusLabelCoordinate.Text = string.Format("X, Y: {0}, {1} px", e.X, e.Y);
@@ -565,8 +604,8 @@ namespace GraphicEditor
                     else if (activeTool == Tools.eraser && e.Button == MouseButtons.Left)
                     {
                         graphics.DrawLine(eraser, drawingStartPos, e.Location);
-                    }                    
-                    drawingStartPos = e.Location;                    
+                    }
+                    drawingStartPos = e.Location;
                     pictureBoxMain.Refresh();
                 }
             }
@@ -577,7 +616,7 @@ namespace GraphicEditor
             if (!IsMouseUp)
             {
                 IsMouseUp = true;
-                redoImage = currentImage.Clone() as Bitmap;
+                redoImage = pictureBoxMain.Image.Clone() as Bitmap;
             }
 
             if (drawingMode)
@@ -614,7 +653,7 @@ namespace GraphicEditor
                             else if (e.Button == MouseButtons.Right)
                             {
                                 graphics.DrawEllipse(pencil2, drawingPosX, drawingPosY, figureWidth, figureHeight);
-                            }                            
+                            }
                             if (fillingMode == FillingMode.solid_color)
                             {
                                 graphics.FillEllipse(figureBackgroundBrush, drawingPosX + outerShift, drawingPosY + outerShift, figureWidth - innerCircleShift, figureHeight - innerCircleShift);
@@ -630,22 +669,43 @@ namespace GraphicEditor
                             else if (e.Button == MouseButtons.Right)
                             {
                                 graphics.DrawRectangle(pencil2, drawingPosX, drawingPosY, figureWidth, figureHeight);
-                            }                             
+                            }
                             if (fillingMode == FillingMode.solid_color)
                             {
                                 graphics.FillRectangle(figureBackgroundBrush, drawingPosX + outerShift, drawingPosY + outerShift, figureWidth - penSize, figureHeight - penSize);
                             }
                             break;
                         }
-                }          
+                }
                 pictureBoxMain.Refresh();
                 drawingMode = false;
 
-                redoImage = currentImage.Clone() as Bitmap;
+                redoImage = pictureBoxMain.Image.Clone() as Bitmap;
             }
         }
 
+        private void pictureBoxMain_SizeChanged(object sender, EventArgs e)
+        {
+            currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
+
+            int w = pictureBoxMain.Image.Width < pictureBoxMain.Width ? pictureBoxMain.Image.Width : pictureBoxMain.Width;
+            int h = pictureBoxMain.Image.Height < pictureBoxMain.Height ? pictureBoxMain.Image.Height : pictureBoxMain.Height;
+
+            for (int x = 0; x <= w - 1; x++)
+            {
+                for (int y = 0; y <= h - 1; y += 1)
+                {
+                    Color oldPixel = (pictureBoxMain.Image as Bitmap).GetPixel(x, y);
+                    currentImage.SetPixel(x, y, oldPixel);
+                }
+            }
+
+            pictureBoxMain.Image = currentImage.Clone() as Bitmap;
+        }
+
         #endregion
+
+        #region установка размера кисти
 
         /// <summary>
         /// установка размера кисти
@@ -670,7 +730,7 @@ namespace GraphicEditor
         /// </summary>
         private void toolStripTextBoxPenSize_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (e.KeyChar == '0' && ((ToolStripTextBox) sender).Text.Length <= 0)
+            if (e.KeyChar == '0' && ((ToolStripTextBox)sender).Text.Length <= 0)
             {
                 e.Handled = true;
             }
@@ -678,8 +738,9 @@ namespace GraphicEditor
             {
                 e.Handled = true;
             }
-            
         }
+
+        #endregion
 
         #region эффекты
 
@@ -696,7 +757,7 @@ namespace GraphicEditor
         private void BW_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             toolStripProgressBar.Maximum = 0;
-            pictureBoxMain.Image = currentImage;
+            pictureBoxMain.Image = currentImage.Clone() as Bitmap;
 
             redoImage = currentImage.Clone() as Bitmap;
         }
@@ -719,6 +780,8 @@ namespace GraphicEditor
 
         void Effect(ImageEditor.Effect effect)
         {
+            currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+
             toolStripProgressBar.Minimum = 0;
             toolStripProgressBar.Maximum = currentImage.Width * currentImage.Height;
             toolStripProgressBar.Step = currentImage.Width;
@@ -737,8 +800,8 @@ namespace GraphicEditor
             BW.RunWorkerCompleted += BW_RunWorkerCompleted;
             BW.RunWorkerAsync();
         }
-        
-        #endregion       
+
+        #endregion
 
         /// <summary>
         /// вызов окна цветовой коррекции
@@ -748,15 +811,15 @@ namespace GraphicEditor
             FormColorCorrection formColorCorrection = new FormColorCorrection();
             formColorCorrection.ShowInTaskbar = false;
             formColorCorrection.SetPicture(currentImage);
-            
+
             if (formColorCorrection.ShowDialog() == DialogResult.OK)
             {
                 undoImage = currentImage.Clone() as Bitmap;
                 pictureBoxMain.Image = formColorCorrection.GetPicture();
                 currentImage = pictureBoxMain.Image.Clone() as Bitmap;
                 redoImage = currentImage.Clone() as Bitmap;
-            }           
-        }        
+            }
+        }
 
         /// <summary>
         /// при закрытии программы выводим запрос на сохранение текущего файла
@@ -772,8 +835,10 @@ namespace GraphicEditor
             else if (dlgResult == System.Windows.Forms.DialogResult.Cancel)
             {
                 e.Cancel = true;
-            } 
+            }
         }
+
+        #region возврат действий
 
         /// <summary>
         /// возврат к предыдущему состоянию (отмена последнего действия)
@@ -781,7 +846,7 @@ namespace GraphicEditor
         private void toolStripButtonRedo_Click(object sender, EventArgs e)
         {
             currentImage = redoImage;
-            pictureBoxMain.Image = currentImage;
+            pictureBoxMain.Image = currentImage.Clone() as Bitmap;
             pictureBoxMain.Refresh();
         }
 
@@ -791,18 +856,10 @@ namespace GraphicEditor
         private void toolStripButtonUndo_Click(object sender, EventArgs e)
         {
             currentImage = undoImage;
-            pictureBoxMain.Image = currentImage;
+            pictureBoxMain.Image = currentImage.Clone() as Bitmap;
             pictureBoxMain.Refresh();
         }
 
-        private void pictureBoxMain_MouseEnter(object sender, EventArgs e)
-        {
-            ActivateCursor();
-        }
-
-        private void pictureBoxMain_MouseLeave(object sender, EventArgs e)
-        {
-            DeactivateCursor();
-        }
+        #endregion     
     }
 }
