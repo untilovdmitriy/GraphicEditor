@@ -462,15 +462,7 @@ namespace GraphicEditor
         /// </summary>
         private void withoutFillingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (solidColorToolStripMenuItem.Checked)
-            {
-                solidColorToolStripMenuItem.Checked = false;
-            }
-            else if (!withoutFillingToolStripMenuItem.Checked)
-            {
-                withoutFillingToolStripMenuItem.Checked = true;
-            }
-            fillingMode = FillingMode.without_filling;
+            SelectFillingMode(); 
         }
 
         /// <summary>
@@ -478,15 +470,21 @@ namespace GraphicEditor
         /// </summary>
         private void solidColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (!solidColorToolStripMenuItem.Checked)
+            SelectFillingMode();          
+        }
+
+        private void SelectFillingMode()
+        {
+            solidColorToolStripMenuItem.Checked = !solidColorToolStripMenuItem.Checked;
+            withoutFillingToolStripMenuItem.Checked = !withoutFillingToolStripMenuItem.Checked;
+            if (solidColorToolStripMenuItem.Checked)
             {
-                solidColorToolStripMenuItem.Checked = true;
+                fillingMode = FillingMode.solid_color;
             }
             else if (withoutFillingToolStripMenuItem.Checked)
             {
-                withoutFillingToolStripMenuItem.Checked = false;
+                fillingMode = FillingMode.without_filling;
             }
-            fillingMode = FillingMode.solid_color;
         }
 
         /// <summary>
@@ -627,8 +625,8 @@ namespace GraphicEditor
                 float figureHeight = Math.Abs(drawingEndPos.Y - drawingStartPos.Y);
                 float drawingPosX = drawingEndPos.X > drawingStartPos.X ? drawingStartPos.X : drawingEndPos.X;
                 float drawingPosY = drawingEndPos.Y > drawingStartPos.Y ? drawingStartPos.Y : drawingEndPos.Y;
-                int outerShift = penSize % 2 == 0 ? penSize / 2 : penSize / 2 + 1;
-                int innerCircleShift = penSize % 2 == 0 ? penSize : penSize + 1;
+                float outerShift = penSize % 2 == 0 ? penSize / 2 : penSize / 2 + 0.5f;
+                int innerCircleShift = penSize;
 
                 switch (activeTool)
                 {
@@ -655,7 +653,7 @@ namespace GraphicEditor
                                 graphics.DrawEllipse(pencil2, drawingPosX, drawingPosY, figureWidth, figureHeight);
                             }
                             if (fillingMode == FillingMode.solid_color)
-                            {
+                            {            
                                 graphics.FillEllipse(figureBackgroundBrush, drawingPosX + outerShift, drawingPosY + outerShift, figureWidth - innerCircleShift, figureHeight - innerCircleShift);
                             }
                             break;
@@ -861,5 +859,10 @@ namespace GraphicEditor
         }
 
         #endregion     
+
+        private void FormEditor_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
