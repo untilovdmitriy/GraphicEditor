@@ -68,7 +68,7 @@ namespace GraphicEditor
             catch (Exception)
             {
                 buttonOK.Enabled = false;
-                MessageBox.Show("Incorrect size!");
+                MessageBox.Show(Messages.INCORRECT_IMAGE_SIZE);
             }
         }
 

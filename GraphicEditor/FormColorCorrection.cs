@@ -115,7 +115,7 @@ namespace GraphicEditor
             }
             catch (Exception)
             {
-                if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
             }
         }
 
@@ -143,7 +143,7 @@ namespace GraphicEditor
             }
             catch (Exception)
             {
-                if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
             }
         }
 
@@ -156,7 +156,7 @@ namespace GraphicEditor
             }
             catch (Exception)
             {
-                if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
             }
         }
 
@@ -169,7 +169,7 @@ namespace GraphicEditor
             }
             catch (Exception)
             {
-                if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
             }
         }
 
@@ -182,7 +182,7 @@ namespace GraphicEditor
             }
             catch (Exception)
             {
-                if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
             }
         }
 
@@ -195,7 +195,7 @@ namespace GraphicEditor
             }
             catch (Exception)
             {
-                if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
             }
         }
 
@@ -208,7 +208,7 @@ namespace GraphicEditor
             }
             catch (Exception)
             {
-                if (((TextBox)sender).Text != "-") MessageBox.Show("Incorrect value!");
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
             }
         }
 

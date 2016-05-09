@@ -464,7 +464,6 @@
             this.Name = "FormEditor";
             this.Text = "GraphicEditor";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.FormEditor_FormClosing);
-            this.Load += new System.EventHandler(this.FormEditor_Load);
             this.toolStripFile.ResumeLayout(false);
             this.toolStripFile.PerformLayout();
             this.toolStripMainTools.ResumeLayout(false);

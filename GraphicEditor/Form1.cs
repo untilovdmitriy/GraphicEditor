@@ -341,13 +341,18 @@ namespace GraphicEditor
             fillingMode = FillingMode.without_filling;
 
             toolStripStatusLabelCoordinate.Text = "";
-
             toolStripStatusLabelSizeImg.Spring = true;
             toolStripStatusLabelSizeImg.TextAlign = ContentAlignment.MiddleLeft;
-            toolStripStatusLabelSizeImg.Text = string.Format("Size: {0} x {1} px", pictureBoxMain.Size.Width, pictureBoxMain.Size.Height);
+
+            ShowImageSize();
 
             openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.png, *.bmp, *.gif) | *.jpg; *.jpeg; *.jpe; *.png; *.bmp; *.gif";
             saveFileDialog1.Filter += "Jpeg (*.jpeg) |*.jpeg| Bmp (*.bmp)|*.bmp|Png (*.png)|*.png| Gif (*.gif)|*.gif";
+        }
+
+        void ShowImageSize()
+        {
+            toolStripStatusLabelSizeImg.Text = string.Format("Size: {0} x {1} px", pictureBoxMain.Size.Width, pictureBoxMain.Size.Height);
         }
 
         #endregion
@@ -359,7 +364,7 @@ namespace GraphicEditor
         /// </summary>
         private void создатьToolStripButton_Click(object sender, EventArgs e)
         {
-            var dlgResult = MessageBox.Show("Do you want to save changes in current picture?", "Want to save?", MessageBoxButtons.YesNoCancel);
+            var dlgResult = MessageBox.Show(Messages.WANT_SAVE_QUESTION, Messages.WANT_SAVE_CAPTION, MessageBoxButtons.YesNoCancel);
 
             if (dlgResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -369,6 +374,7 @@ namespace GraphicEditor
             else if (dlgResult == System.Windows.Forms.DialogResult.No)
             {
                 CreateNew();
+                ShowImageSize();
             }
         }
 
@@ -377,7 +383,7 @@ namespace GraphicEditor
         /// </summary>
         private void открытьToolStripButton_Click(object sender, EventArgs e)
         {
-            openFileDialog1.FileName = "";
+            openFileDialog1.FileName = String.Empty;
             if (openFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 OpenFile(openFileDialog1.FileName);
@@ -699,6 +705,8 @@ namespace GraphicEditor
             }
 
             pictureBoxMain.Image = currentImage.Clone() as Bitmap;
+
+            ShowImageSize();
         }
 
         #endregion
@@ -719,7 +727,7 @@ namespace GraphicEditor
             }
             catch (FormatException)
             {
-                MessageBox.Show("Incorrect pen size!");
+                MessageBox.Show(Messages.INCORRECT_PEN_SIZE);
             }
         }
 
@@ -824,7 +832,7 @@ namespace GraphicEditor
         /// </summary>
         private void FormEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var dlgResult = MessageBox.Show("Do you want to save changes in current picture?", "Want to save?", MessageBoxButtons.YesNoCancel);
+            var dlgResult = MessageBox.Show(Messages.WANT_SAVE_QUESTION, Messages.WANT_SAVE_CAPTION, MessageBoxButtons.YesNoCancel);
 
             if (dlgResult == System.Windows.Forms.DialogResult.Yes)
             {
@@ -859,10 +867,5 @@ namespace GraphicEditor
         }
 
         #endregion     
-
-        private void FormEditor_Load(object sender, EventArgs e)
-        {
-
-        }
     }
 }
