@@ -30,3 +30,17 @@ M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.application
 M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.exe
 M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.pdb
 M:\GIT\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.csprojResolveAssemblyReference.cache
+C:\Git\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.exe.config
+C:\Git\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.exe.manifest
+C:\Git\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.application
+C:\Git\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.exe
+C:\Git\GraphicEditor\GraphicEditor\bin\Debug\GraphicEditor.pdb
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.CreateNewForm.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormEditor.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.FormColorCorrection.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.Properties.Resources.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.csproj.GenerateResource.Cache
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.exe.manifest
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.application
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.exe
+C:\Git\GraphicEditor\GraphicEditor\obj\Debug\GraphicEditor.pdb
