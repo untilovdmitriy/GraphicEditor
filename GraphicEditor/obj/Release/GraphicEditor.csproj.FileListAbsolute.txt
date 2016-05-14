@@ -20,8 +20,12 @@ C:\Git\GraphicEditor\GraphicEditor\bin\Release\GraphicEditor.exe
 C:\Git\GraphicEditor\GraphicEditor\bin\Release\GraphicEditor.pdb
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.CreateNewForm.resources
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.FormEditor.resources
-C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.FormColorCorrection.resources
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.Properties.Resources.resources
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.csproj.GenerateResource.Cache
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.exe.manifest
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.application
+C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.csprojResolveAssemblyReference.cache
+C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.BrightnessContrast.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.ColorBalance.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.GammaCorrection.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.HueSaturation.resources

@@ -814,17 +814,7 @@ namespace GraphicEditor
         /// </summary>
         private void colorCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            FormColorCorrection formColorCorrection = new FormColorCorrection();
-            formColorCorrection.ShowInTaskbar = false;
-            formColorCorrection.SetPicture(currentImage);
-
-            if (formColorCorrection.ShowDialog() == DialogResult.OK)
-            {
-                undoImage = currentImage.Clone() as Bitmap;
-                pictureBoxMain.Image = formColorCorrection.GetPicture();
-                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
-                redoImage = currentImage.Clone() as Bitmap;
-            }
+            
         }
 
         /// <summary>
@@ -867,5 +857,65 @@ namespace GraphicEditor
         }
 
         #endregion     
+
+        private void gammaCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            GammaCorrection window = new GammaCorrection();
+            window.ShowInTaskbar = false;
+            window.SetPicture(currentImage);
+
+            if (window.ShowDialog() == DialogResult.OK)
+            {
+                undoImage = currentImage.Clone() as Bitmap;
+                pictureBoxMain.Image = window.GetPicture();
+                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+                redoImage = currentImage.Clone() as Bitmap;
+            }
+        }
+
+        private void brightnessContrastToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            BrightnessContrast window = new BrightnessContrast();
+            window.ShowInTaskbar = false;
+            window.SetPicture(currentImage);
+
+            if (window.ShowDialog() == DialogResult.OK)
+            {
+                undoImage = currentImage.Clone() as Bitmap;
+                pictureBoxMain.Image = window.GetPicture();
+                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+                redoImage = currentImage.Clone() as Bitmap;
+            }
+        }
+
+        private void hueSaturationToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            HueSaturation window = new HueSaturation();
+            window.ShowInTaskbar = false;
+            window.SetPicture(currentImage);
+
+            if (window.ShowDialog() == DialogResult.OK)
+            {
+                undoImage = currentImage.Clone() as Bitmap;
+                pictureBoxMain.Image = window.GetPicture();
+                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+                redoImage = currentImage.Clone() as Bitmap;
+            }
+        }
+
+        private void colorBalanceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            ColorBalance window = new ColorBalance();
+            window.ShowInTaskbar = false;
+            window.SetPicture(currentImage);
+
+            if (window.ShowDialog() == DialogResult.OK)
+            {
+                undoImage = currentImage.Clone() as Bitmap;
+                pictureBoxMain.Image = window.GetPicture();
+                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+                redoImage = currentImage.Clone() as Bitmap;
+            }
+        }
     }
 }

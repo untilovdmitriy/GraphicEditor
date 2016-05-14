@@ -77,6 +77,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Additional.cs" />
+    <Compile Include="BrightnessContrast.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="BrightnessContrast.Designer.cs">
+      <DependentUpon>BrightnessContrast.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ColorBalance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ColorBalance.Designer.cs">
+      <DependentUpon>ColorBalance.cs</DependentUpon>
+    </Compile>
     <Compile Include="CreateNewForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -89,23 +101,38 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="FormColorCorrection.cs">
+    <Compile Include="GammaCorrection.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="FormColorCorrection.Designer.cs">
-      <DependentUpon>FormColorCorrection.cs</DependentUpon>
+    <Compile Include="GammaCorrection.Designer.cs">
+      <DependentUpon>GammaCorrection.cs</DependentUpon>
+    </Compile>
+    <Compile Include="HueSaturation.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="HueSaturation.Designer.cs">
+      <DependentUpon>HueSaturation.cs</DependentUpon>
     </Compile>
     <Compile Include="ImageEditor.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="BrightnessContrast.resx">
+      <DependentUpon>BrightnessContrast.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ColorBalance.resx">
+      <DependentUpon>ColorBalance.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CreateNewForm.resx">
       <DependentUpon>CreateNewForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="FormColorCorrection.resx">
-      <DependentUpon>FormColorCorrection.cs</DependentUpon>
+    <EmbeddedResource Include="GammaCorrection.resx">
+      <DependentUpon>GammaCorrection.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="HueSaturation.resx">
+      <DependentUpon>HueSaturation.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -40,13 +40,16 @@
             this.открытьToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.сохранитьToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripDropDownButtonEdit = new System.Windows.Forms.ToolStripDropDownButton();
-            this.colorCorrectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sharpnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButtonImage = new System.Windows.Forms.ToolStripDropDownButton();
+            this.gammaCorrectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.brightnessContrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hueSaturationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorBalanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripDropDownButtonEffects = new System.Windows.Forms.ToolStripDropDownButton();
             this.inversionNegativeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.effectsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.blurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sharpnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripButtonUndo = new System.Windows.Forms.ToolStripButton();
             this.toolStripButtonRedo = new System.Windows.Forms.ToolStripButton();
             this.toolStripMainTools = new System.Windows.Forms.ToolStrip();
@@ -91,7 +94,8 @@
             this.открытьToolStripButton,
             this.сохранитьToolStripButton,
             this.toolStripSeparator,
-            this.toolStripDropDownButtonEdit,
+            this.toolStripDropDownButtonImage,
+            this.toolStripDropDownButtonEffects,
             this.toolStripButtonUndo,
             this.toolStripButtonRedo});
             this.toolStripFile.Location = new System.Drawing.Point(0, 0);
@@ -135,35 +139,63 @@
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
             // 
-            // toolStripDropDownButtonEdit
+            // toolStripDropDownButtonImage
             // 
-            this.toolStripDropDownButtonEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButtonEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.colorCorrectionToolStripMenuItem,
-            this.sharpnessToolStripMenuItem,
+            this.toolStripDropDownButtonImage.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButtonImage.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.gammaCorrectionToolStripMenuItem,
+            this.brightnessContrastToolStripMenuItem,
+            this.hueSaturationToolStripMenuItem,
+            this.colorBalanceToolStripMenuItem});
+            this.toolStripDropDownButtonImage.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonImage.Image")));
+            this.toolStripDropDownButtonImage.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonImage.Name = "toolStripDropDownButtonImage";
+            this.toolStripDropDownButtonImage.Size = new System.Drawing.Size(56, 22);
+            this.toolStripDropDownButtonImage.Text = "Image";
+            this.toolStripDropDownButtonImage.ToolTipText = "Image";
+            // 
+            // gammaCorrectionToolStripMenuItem
+            // 
+            this.gammaCorrectionToolStripMenuItem.Name = "gammaCorrectionToolStripMenuItem";
+            this.gammaCorrectionToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.gammaCorrectionToolStripMenuItem.Text = "Gamma correction";
+            this.gammaCorrectionToolStripMenuItem.Click += new System.EventHandler(this.gammaCorrectionToolStripMenuItem_Click);
+            // 
+            // brightnessContrastToolStripMenuItem
+            // 
+            this.brightnessContrastToolStripMenuItem.Name = "brightnessContrastToolStripMenuItem";
+            this.brightnessContrastToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.brightnessContrastToolStripMenuItem.Text = "Brightness/Contrast";
+            this.brightnessContrastToolStripMenuItem.Click += new System.EventHandler(this.brightnessContrastToolStripMenuItem_Click);
+            // 
+            // hueSaturationToolStripMenuItem
+            // 
+            this.hueSaturationToolStripMenuItem.Name = "hueSaturationToolStripMenuItem";
+            this.hueSaturationToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.hueSaturationToolStripMenuItem.Text = "Hue/Saturation";
+            this.hueSaturationToolStripMenuItem.Click += new System.EventHandler(this.hueSaturationToolStripMenuItem_Click);
+            // 
+            // colorBalanceToolStripMenuItem
+            // 
+            this.colorBalanceToolStripMenuItem.Name = "colorBalanceToolStripMenuItem";
+            this.colorBalanceToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.colorBalanceToolStripMenuItem.Text = "Color balance";
+            this.colorBalanceToolStripMenuItem.Click += new System.EventHandler(this.colorBalanceToolStripMenuItem_Click);
+            // 
+            // toolStripDropDownButtonEffects
+            // 
+            this.toolStripDropDownButtonEffects.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButtonEffects.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.inversionNegativeToolStripMenuItem,
-            this.effectsToolStripMenuItem,
-            this.grayscaleToolStripMenuItem});
-            this.toolStripDropDownButtonEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonEdit.Image")));
-            this.toolStripDropDownButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonEdit.Name = "toolStripDropDownButtonEdit";
-            this.toolStripDropDownButtonEdit.Size = new System.Drawing.Size(43, 22);
-            this.toolStripDropDownButtonEdit.Text = "Edit";
-            this.toolStripDropDownButtonEdit.ToolTipText = "Edit";
-            // 
-            // colorCorrectionToolStripMenuItem
-            // 
-            this.colorCorrectionToolStripMenuItem.Name = "colorCorrectionToolStripMenuItem";
-            this.colorCorrectionToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.colorCorrectionToolStripMenuItem.Text = "Color correction";
-            this.colorCorrectionToolStripMenuItem.Click += new System.EventHandler(this.colorCorrectionToolStripMenuItem_Click);
-            // 
-            // sharpnessToolStripMenuItem
-            // 
-            this.sharpnessToolStripMenuItem.Name = "sharpnessToolStripMenuItem";
-            this.sharpnessToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.sharpnessToolStripMenuItem.Text = "Sharpness";
-            this.sharpnessToolStripMenuItem.Visible = false;
+            this.grayscaleToolStripMenuItem,
+            this.sharpnessToolStripMenuItem,
+            this.blurToolStripMenuItem});
+            this.toolStripDropDownButtonEffects.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonEffects.Image")));
+            this.toolStripDropDownButtonEffects.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonEffects.Name = "toolStripDropDownButtonEffects";
+            this.toolStripDropDownButtonEffects.Size = new System.Drawing.Size(59, 22);
+            this.toolStripDropDownButtonEffects.Text = "Effects";
+            this.toolStripDropDownButtonEffects.ToolTipText = "Effects";
             // 
             // inversionNegativeToolStripMenuItem
             // 
@@ -172,27 +204,25 @@
             this.inversionNegativeToolStripMenuItem.Text = "Inversion (Negative)";
             this.inversionNegativeToolStripMenuItem.Click += new System.EventHandler(this.inversionNegativeToolStripMenuItem_Click);
             // 
-            // effectsToolStripMenuItem
-            // 
-            this.effectsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.blurToolStripMenuItem});
-            this.effectsToolStripMenuItem.Name = "effectsToolStripMenuItem";
-            this.effectsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.effectsToolStripMenuItem.Text = "Effects";
-            this.effectsToolStripMenuItem.Visible = false;
-            // 
-            // blurToolStripMenuItem
-            // 
-            this.blurToolStripMenuItem.Name = "blurToolStripMenuItem";
-            this.blurToolStripMenuItem.Size = new System.Drawing.Size(98, 22);
-            this.blurToolStripMenuItem.Text = "Blur";
-            // 
             // grayscaleToolStripMenuItem
             // 
             this.grayscaleToolStripMenuItem.Name = "grayscaleToolStripMenuItem";
             this.grayscaleToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.grayscaleToolStripMenuItem.Text = "Grayscale";
             this.grayscaleToolStripMenuItem.Click += new System.EventHandler(this.grayscaleToolStripMenuItem_Click);
+            // 
+            // sharpnessToolStripMenuItem
+            // 
+            this.sharpnessToolStripMenuItem.Name = "sharpnessToolStripMenuItem";
+            this.sharpnessToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.sharpnessToolStripMenuItem.Text = "Sharpness";
+            this.sharpnessToolStripMenuItem.Visible = false;
+            // 
+            // blurToolStripMenuItem
+            // 
+            this.blurToolStripMenuItem.Name = "blurToolStripMenuItem";
+            this.blurToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.blurToolStripMenuItem.Text = "Blur";
             // 
             // toolStripButtonUndo
             // 
@@ -512,15 +542,18 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator4;
         private System.Windows.Forms.ToolStripLabel toolStripLabelPenSize;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxPenSize;
-        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonEdit;
-        private System.Windows.Forms.ToolStripMenuItem colorCorrectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonEffects;
         private System.Windows.Forms.ToolStripMenuItem sharpnessToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem inversionNegativeToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem effectsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem blurToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem grayscaleToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton toolStripButtonUndo;
         private System.Windows.Forms.ToolStripButton toolStripButtonRedo;
+        private System.Windows.Forms.ToolStripDropDownButton toolStripDropDownButtonImage;
+        private System.Windows.Forms.ToolStripMenuItem gammaCorrectionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem brightnessContrastToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem hueSaturationToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem colorBalanceToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem blurToolStripMenuItem;
     }
 }
 
