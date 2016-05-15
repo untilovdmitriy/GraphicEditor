@@ -223,6 +223,7 @@
             this.blurToolStripMenuItem.Name = "blurToolStripMenuItem";
             this.blurToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.blurToolStripMenuItem.Text = "Blur";
+            this.blurToolStripMenuItem.Click += new System.EventHandler(this.blurToolStripMenuItem_Click);
             // 
             // toolStripButtonUndo
             // 

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GraphicEditor
 {
-    public partial class HueSaturation : Form
+    public partial class HueSaturation : Form, ICorrection
     {
         Image currentImage;
 

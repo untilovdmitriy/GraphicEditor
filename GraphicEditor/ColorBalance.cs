@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GraphicEditor
 {
-    public partial class ColorBalance : Form
+    public partial class ColorBalance : Form, ICorrection
     {
         Image currentImage;
 

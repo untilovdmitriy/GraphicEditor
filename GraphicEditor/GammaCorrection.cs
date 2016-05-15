@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GraphicEditor
 {
-    public partial class GammaCorrection : Form
+    public partial class GammaCorrection : Form, ICorrection
     {
         Image currentImage;
 

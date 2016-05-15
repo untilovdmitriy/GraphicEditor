@@ -229,5 +229,54 @@ namespace GraphicEditor
         {
             return Color.FromArgb(oldPixel.A, 255 - oldPixel.R, 255 - oldPixel.G, 255 - oldPixel.B);
         }
+
+        /// <summary>
+        /// размытие
+        /// </summary>
+        /// <param name="oldPixel">старое изображение</param>
+        /// <returns>размытое изображение</returns>
+        public static Bitmap Blur(Bitmap bmp, ref BackgroundWorker BW)
+        {
+            int w = bmp.Width;
+            int h = bmp.Height;
+
+            for (int i = 1; i < w - 1; i++)
+            {
+                for (int j = 0; j < h; j++)
+                {
+                    Color c1 = bmp.GetPixel(i - 1, j);
+                    Color c2 = bmp.GetPixel(i, j);
+                    Color c3 = bmp.GetPixel(i + 1, j);
+
+                    byte r = (byte)((c1.R + c2.R + c3.R) / 3);
+                    byte g = (byte)((c1.G + c2.G + c3.G) / 3);
+                    byte b = (byte)((c1.B + c2.B + c3.B) / 3);
+
+                    Color cBlured = Color.FromArgb(r, g, b);
+
+                    bmp.SetPixel(i, j, cBlured);
+                }
+                BW.ReportProgress((i / 2 / bmp.Width) * 100);
+            }
+            for (int i = 0; i < w; i++)
+            {
+                for (int j = 1; j < h - 1; j++)
+                {
+                    Color c1 = bmp.GetPixel(i, j - 1);
+                    Color c2 = bmp.GetPixel(i, j);
+                    Color c3 = bmp.GetPixel(i, j + 1);
+
+                    byte r = (byte)((c1.R + c2.R + c3.R) / 3);
+                    byte g = (byte)((c1.G + c2.G + c3.G) / 3);
+                    byte b = (byte)((c1.B + c2.B + c3.B) / 3);
+
+                    Color cBlured = Color.FromArgb(r, g, b);
+
+                    bmp.SetPixel(i, j, cBlured);
+                }
+                BW.ReportProgress((i / 2 / bmp.Width) * 100);
+            }
+            return bmp;
+        }
     }
 }

@@ -808,15 +808,7 @@ namespace GraphicEditor
         }
 
         #endregion
-
-        /// <summary>
-        /// вызов окна цветовой коррекции
-        /// </summary>
-        private void colorCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            
-        }
-
+        
         /// <summary>
         /// при закрытии программы выводим запрос на сохранение текущего файла
         /// </summary>
@@ -860,41 +852,31 @@ namespace GraphicEditor
 
         private void gammaCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            GammaCorrection window = new GammaCorrection();
-            window.ShowInTaskbar = false;
-            window.SetPicture(currentImage);
-
-            if (window.ShowDialog() == DialogResult.OK)
-            {
-                undoImage = currentImage.Clone() as Bitmap;
-                pictureBoxMain.Image = window.GetPicture();
-                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
-                redoImage = currentImage.Clone() as Bitmap;
-            }
+            CallCorrecionWindow(new GammaCorrection());
         }
 
         private void brightnessContrastToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            BrightnessContrast window = new BrightnessContrast();
-            window.ShowInTaskbar = false;
-            window.SetPicture(currentImage);
-
-            if (window.ShowDialog() == DialogResult.OK)
-            {
-                undoImage = currentImage.Clone() as Bitmap;
-                pictureBoxMain.Image = window.GetPicture();
-                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
-                redoImage = currentImage.Clone() as Bitmap;
-            }
+            CallCorrecionWindow(new BrightnessContrast());
         }
 
         private void hueSaturationToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            HueSaturation window = new HueSaturation();
-            window.ShowInTaskbar = false;
+            CallCorrecionWindow(new HueSaturation());
+        }
+
+        private void colorBalanceToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CallCorrecionWindow(new ColorBalance());
+        }
+
+        void CallCorrecionWindow(ICorrection window)
+        {
+            Form asForm = window as Form;
+            asForm.ShowInTaskbar = false;
             window.SetPicture(currentImage);
 
-            if (window.ShowDialog() == DialogResult.OK)
+            if (asForm.ShowDialog() == DialogResult.OK)
             {
                 undoImage = currentImage.Clone() as Bitmap;
                 pictureBoxMain.Image = window.GetPicture();
@@ -903,19 +885,27 @@ namespace GraphicEditor
             }
         }
 
-        private void colorBalanceToolStripMenuItem_Click(object sender, EventArgs e)
+        private void blurToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorBalance window = new ColorBalance();
-            window.ShowInTaskbar = false;
-            window.SetPicture(currentImage);
+            currentImage = pictureBoxMain.Image.Clone() as Bitmap;
 
-            if (window.ShowDialog() == DialogResult.OK)
+            toolStripProgressBar.Minimum = 0;
+            toolStripProgressBar.Maximum = currentImage.Width * currentImage.Height;
+            toolStripProgressBar.Step = currentImage.Width;
+
+            undoImage = currentImage.Clone() as Bitmap;
+
+            BackgroundWorker BW = new BackgroundWorker();
+
+            BW.WorkerReportsProgress = true;
+            BW.WorkerSupportsCancellation = true;
+            BW.DoWork += delegate(object s, DoWorkEventArgs ev)
             {
-                undoImage = currentImage.Clone() as Bitmap;
-                pictureBoxMain.Image = window.GetPicture();
-                currentImage = pictureBoxMain.Image.Clone() as Bitmap;
-                redoImage = currentImage.Clone() as Bitmap;
-            }
+                currentImage = ImageEditor.Blur(pictureBoxMain.Image as Bitmap, ref BW);
+            };
+            BW.ProgressChanged += BW_ProgressChanged;
+            BW.RunWorkerCompleted += BW_RunWorkerCompleted;
+            BW.RunWorkerAsync();
         }
     }
 }

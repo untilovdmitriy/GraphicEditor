@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace GraphicEditor
 {
-    public partial class BrightnessContrast : Form
+    public partial class BrightnessContrast : Form, ICorrection
     {
         Image currentImage;
 
