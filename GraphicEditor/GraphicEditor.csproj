@@ -95,11 +95,11 @@
     <Compile Include="CreateNewForm.Designer.cs">
       <DependentUpon>CreateNewForm.cs</DependentUpon>
     </Compile>
-    <Compile Include="Form1.cs">
+    <Compile Include="FormEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="FormEditor.Designer.cs">
+      <DependentUpon>FormEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="GammaCorrection.cs">
       <SubType>Form</SubType>
@@ -126,8 +126,8 @@
     <EmbeddedResource Include="CreateNewForm.resx">
       <DependentUpon>CreateNewForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="FormEditor.resx">
+      <DependentUpon>FormEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GammaCorrection.resx">
       <DependentUpon>GammaCorrection.cs</DependentUpon>
@@ -207,6 +207,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\return_undo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_minus.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_minus.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\zoom_plus.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

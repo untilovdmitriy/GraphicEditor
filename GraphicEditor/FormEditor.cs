@@ -84,6 +84,8 @@ namespace GraphicEditor
         Point MouseDownPoint; // where the mouse was clicked
         Size ControlSize;
 
+        double zoom = 2.0;
+
         /// <summary>
         /// очистка изображения
         /// </summary>
@@ -261,7 +263,7 @@ namespace GraphicEditor
                     }
             }
         }
-        
+
         private void pictureBoxMain_MouseEnter(object sender, EventArgs e)
         {
             ActivateCursor();
@@ -295,7 +297,7 @@ namespace GraphicEditor
 
             ChangeCultureInfo();
             Preparing();
-        }               
+        }
 
         /// <summary>
         /// смена локализации на англ.
@@ -459,7 +461,7 @@ namespace GraphicEditor
             }
         }
 
-        #endregion      
+        #endregion
 
         #region Смена цвета и режима заливки
 
@@ -468,7 +470,7 @@ namespace GraphicEditor
         /// </summary>
         private void withoutFillingToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SelectFillingMode(); 
+            SelectFillingMode();
         }
 
         /// <summary>
@@ -476,7 +478,7 @@ namespace GraphicEditor
         /// </summary>
         private void solidColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SelectFillingMode();          
+            SelectFillingMode();
         }
 
         private void SelectFillingMode()
@@ -659,7 +661,7 @@ namespace GraphicEditor
                                 graphics.DrawEllipse(pencil2, drawingPosX, drawingPosY, figureWidth, figureHeight);
                             }
                             if (fillingMode == FillingMode.solid_color)
-                            {            
+                            {
                                 graphics.FillEllipse(figureBackgroundBrush, drawingPosX + outerShift, drawingPosY + outerShift, figureWidth - innerCircleShift, figureHeight - innerCircleShift);
                             }
                             break;
@@ -808,7 +810,7 @@ namespace GraphicEditor
         }
 
         #endregion
-        
+
         /// <summary>
         /// при закрытии программы выводим запрос на сохранение текущего файла
         /// </summary>
@@ -848,7 +850,7 @@ namespace GraphicEditor
             pictureBoxMain.Refresh();
         }
 
-        #endregion     
+        #endregion
 
         private void gammaCorrectionToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -907,5 +909,45 @@ namespace GraphicEditor
             BW.RunWorkerCompleted += BW_RunWorkerCompleted;
             BW.RunWorkerAsync();
         }
+
+        private void toolStripButtonZoomPlus_Click(object sender, EventArgs e)
+        {
+            currentImage = new Bitmap(currentImage, new Size((int)(currentImage.Width * zoom), (int)(currentImage.Height * zoom)));
+            pictureBoxMain.Image = currentImage;
+        }
+
+        private void toolStripButtonZoomMinus_Click(object sender, EventArgs e)
+        {
+            currentImage = new Bitmap(currentImage, new Size((int)(currentImage.Width / zoom), (int)(currentImage.Height / zoom)));
+            pictureBoxMain.Image = currentImage;
+        }
+
+        private void horizontalToolStripMenuItemHorizontalFlip_Click(object sender, EventArgs e)
+        {
+            currentImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
+            pictureBoxMain.Size = currentImage.Size;
+            pictureBoxMain.Image = currentImage;
+        }
+
+        private void verticalToolStripMenuItemVerticalFlip_Click(object sender, EventArgs e)
+        {
+            currentImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
+            pictureBoxMain.Size = currentImage.Size;
+            pictureBoxMain.Image = currentImage;
+        }
+
+        private void horizontalToolStripMenuItemRotate90Right_Click(object sender, EventArgs e)
+        {
+            currentImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
+            pictureBoxMain.Size = currentImage.Size;
+            pictureBoxMain.Image = currentImage;
+        }
+
+        private void degreeToLeftToolStripMenuItemRotate90Left_Click(object sender, EventArgs e)
+        {
+            currentImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
+            pictureBoxMain.Image = currentImage;
+        }
+
     }
 }
