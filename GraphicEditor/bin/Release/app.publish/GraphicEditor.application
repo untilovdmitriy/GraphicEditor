@@ -7,7 +7,7 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="GraphicEditor.exe.manifest" size="4192">
+    <dependentAssembly dependencyType="install" codebase="Application Files\GraphicEditor_1_0_0_2\GraphicEditor.exe.manifest" size="4192">
       <assemblyIdentity name="GraphicEditor.exe" version="1.0.0.2" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>

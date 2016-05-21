@@ -40,21 +40,6 @@
             this.открытьToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.сохранитьToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripDropDownButtonImage = new System.Windows.Forms.ToolStripDropDownButton();
-            this.gammaCorrectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.brightnessContrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hueSaturationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.colorBalanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripDropDownButtonEffects = new System.Windows.Forms.ToolStripDropDownButton();
-            this.inversionNegativeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sharpnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.blurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripButtonUndo = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonRedo = new System.Windows.Forms.ToolStripButton();
-            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripButtonZoomMinus = new System.Windows.Forms.ToolStripButton();
-            this.toolStripButtonZoomPlus = new System.Windows.Forms.ToolStripButton();
             this.toolStripDropDownButtonEdit = new System.Windows.Forms.ToolStripDropDownButton();
             this.rotateToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.horizontalToolStripMenuItemRotate90Right = new System.Windows.Forms.ToolStripMenuItem();
@@ -62,6 +47,24 @@
             this.flipToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.horizontalToolStripMenuItemHorizontalFlip = new System.Windows.Forms.ToolStripMenuItem();
             this.verticalToolStripMenuItemVerticalFlip = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripDropDownButtonImage = new System.Windows.Forms.ToolStripDropDownButton();
+            this.gammaCorrectionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.brightnessContrastToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.hueSaturationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.colorBalanceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripDropDownButtonEffects = new System.Windows.Forms.ToolStripDropDownButton();
+            this.inversionNegativeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.grayscaleToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sharpnessToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.blurToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonUndo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonRedo = new System.Windows.Forms.ToolStripButton();
+            this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripButtonZoomMinus = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonZoomPlus = new System.Windows.Forms.ToolStripButton();
             this.toolStripMainTools = new System.Windows.Forms.ToolStrip();
             this.toolStripButtonCursorDefault = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
@@ -89,9 +92,6 @@
             this.toolStripStatusLabelCoordinate = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLabelSizeImg = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripProgressBar = new System.Windows.Forms.ToolStripProgressBar();
-            this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
-            this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripFile.SuspendLayout();
             this.toolStripMainTools.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -120,7 +120,7 @@
             this.toolStripButtonZoomPlus});
             this.toolStripFile.Location = new System.Drawing.Point(0, 0);
             this.toolStripFile.Name = "toolStripFile";
-            this.toolStripFile.Size = new System.Drawing.Size(1010, 25);
+            this.toolStripFile.Size = new System.Drawing.Size(908, 25);
             this.toolStripFile.TabIndex = 0;
             this.toolStripFile.Text = "toolStrip1";
             // 
@@ -158,6 +158,69 @@
             // 
             this.toolStripSeparator.Name = "toolStripSeparator";
             this.toolStripSeparator.Size = new System.Drawing.Size(6, 25);
+            // 
+            // toolStripDropDownButtonEdit
+            // 
+            this.toolStripDropDownButtonEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripDropDownButtonEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.rotateToolStripMenuItem,
+            this.flipToolStripMenuItem});
+            this.toolStripDropDownButtonEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonEdit.Image")));
+            this.toolStripDropDownButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripDropDownButtonEdit.Name = "toolStripDropDownButtonEdit";
+            this.toolStripDropDownButtonEdit.Size = new System.Drawing.Size(43, 22);
+            this.toolStripDropDownButtonEdit.Text = "Edit";
+            // 
+            // rotateToolStripMenuItem
+            // 
+            this.rotateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.horizontalToolStripMenuItemRotate90Right,
+            this.degreeToLeftToolStripMenuItemRotate90Left});
+            this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.rotateToolStripMenuItem.Text = "Rotate";
+            // 
+            // horizontalToolStripMenuItemRotate90Right
+            // 
+            this.horizontalToolStripMenuItemRotate90Right.Name = "horizontalToolStripMenuItemRotate90Right";
+            this.horizontalToolStripMenuItemRotate90Right.Size = new System.Drawing.Size(182, 22);
+            this.horizontalToolStripMenuItemRotate90Right.Text = "90 degree to right";
+            this.horizontalToolStripMenuItemRotate90Right.Click += new System.EventHandler(this.horizontalToolStripMenuItemRotate90Right_Click);
+            // 
+            // degreeToLeftToolStripMenuItemRotate90Left
+            // 
+            this.degreeToLeftToolStripMenuItemRotate90Left.Name = "degreeToLeftToolStripMenuItemRotate90Left";
+            this.degreeToLeftToolStripMenuItemRotate90Left.Size = new System.Drawing.Size(182, 22);
+            this.degreeToLeftToolStripMenuItemRotate90Left.Text = "90 degree to left";
+            this.degreeToLeftToolStripMenuItemRotate90Left.Click += new System.EventHandler(this.degreeToLeftToolStripMenuItemRotate90Left_Click);
+            // 
+            // flipToolStripMenuItem
+            // 
+            this.flipToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.horizontalToolStripMenuItemHorizontalFlip,
+            this.verticalToolStripMenuItemVerticalFlip});
+            this.flipToolStripMenuItem.Name = "flipToolStripMenuItem";
+            this.flipToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.flipToolStripMenuItem.Text = "Flip";
+            // 
+            // horizontalToolStripMenuItemHorizontalFlip
+            // 
+            this.horizontalToolStripMenuItemHorizontalFlip.Name = "horizontalToolStripMenuItemHorizontalFlip";
+            this.horizontalToolStripMenuItemHorizontalFlip.Size = new System.Drawing.Size(135, 22);
+            this.horizontalToolStripMenuItemHorizontalFlip.Text = "Horizontal";
+            this.horizontalToolStripMenuItemHorizontalFlip.Click += new System.EventHandler(this.horizontalToolStripMenuItemHorizontalFlip_Click);
+            // 
+            // verticalToolStripMenuItemVerticalFlip
+            // 
+            this.verticalToolStripMenuItemVerticalFlip.Name = "verticalToolStripMenuItemVerticalFlip";
+            this.verticalToolStripMenuItemVerticalFlip.Size = new System.Drawing.Size(135, 22);
+            this.verticalToolStripMenuItemVerticalFlip.Text = "Vertical";
+            this.verticalToolStripMenuItemVerticalFlip.Click += new System.EventHandler(this.verticalToolStripMenuItemVerticalFlip_Click);
+            // 
+            // toolStripSeparator6
+            // 
+            this.toolStripSeparator6.Name = "toolStripSeparator6";
+            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripDropDownButtonImage
             // 
@@ -202,6 +265,11 @@
             this.colorBalanceToolStripMenuItem.Text = "Color balance";
             this.colorBalanceToolStripMenuItem.Click += new System.EventHandler(this.colorBalanceToolStripMenuItem_Click);
             // 
+            // toolStripSeparator7
+            // 
+            this.toolStripSeparator7.Name = "toolStripSeparator7";
+            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
+            // 
             // toolStripDropDownButtonEffects
             // 
             this.toolStripDropDownButtonEffects.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
@@ -244,6 +312,11 @@
             this.blurToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
             this.blurToolStripMenuItem.Text = "Blur";
             this.blurToolStripMenuItem.Click += new System.EventHandler(this.blurToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator8
+            // 
+            this.toolStripSeparator8.Name = "toolStripSeparator8";
+            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
             // 
             // toolStripButtonUndo
             // 
@@ -292,64 +365,6 @@
             this.toolStripButtonZoomPlus.ToolTipText = "Zoom plus";
             this.toolStripButtonZoomPlus.Click += new System.EventHandler(this.toolStripButtonZoomPlus_Click);
             // 
-            // toolStripDropDownButtonEdit
-            // 
-            this.toolStripDropDownButtonEdit.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
-            this.toolStripDropDownButtonEdit.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.rotateToolStripMenuItem,
-            this.flipToolStripMenuItem});
-            this.toolStripDropDownButtonEdit.Image = ((System.Drawing.Image)(resources.GetObject("toolStripDropDownButtonEdit.Image")));
-            this.toolStripDropDownButtonEdit.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripDropDownButtonEdit.Name = "toolStripDropDownButtonEdit";
-            this.toolStripDropDownButtonEdit.Size = new System.Drawing.Size(43, 22);
-            this.toolStripDropDownButtonEdit.Text = "Edit";
-            // 
-            // rotateToolStripMenuItem
-            // 
-            this.rotateToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.horizontalToolStripMenuItemRotate90Right,
-            this.degreeToLeftToolStripMenuItemRotate90Left});
-            this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.rotateToolStripMenuItem.Text = "Rotate";
-            // 
-            // horizontalToolStripMenuItemRotate90Right
-            // 
-            this.horizontalToolStripMenuItemRotate90Right.Name = "horizontalToolStripMenuItemRotate90Right";
-            this.horizontalToolStripMenuItemRotate90Right.Size = new System.Drawing.Size(182, 22);
-            this.horizontalToolStripMenuItemRotate90Right.Text = "90 degree to right";
-            this.horizontalToolStripMenuItemRotate90Right.Click += new System.EventHandler(this.horizontalToolStripMenuItemRotate90Right_Click);
-            // 
-            // degreeToLeftToolStripMenuItemRotate90Left
-            // 
-            this.degreeToLeftToolStripMenuItemRotate90Left.Name = "degreeToLeftToolStripMenuItemRotate90Left";
-            this.degreeToLeftToolStripMenuItemRotate90Left.Size = new System.Drawing.Size(182, 22);
-            this.degreeToLeftToolStripMenuItemRotate90Left.Text = "90 degree to left";
-            this.degreeToLeftToolStripMenuItemRotate90Left.Click += new System.EventHandler(this.degreeToLeftToolStripMenuItemRotate90Left_Click);
-            // 
-            // flipToolStripMenuItem
-            // 
-            this.flipToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.horizontalToolStripMenuItemHorizontalFlip,
-            this.verticalToolStripMenuItemVerticalFlip});
-            this.flipToolStripMenuItem.Name = "flipToolStripMenuItem";
-            this.flipToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.flipToolStripMenuItem.Text = "Flip";
-            // 
-            // horizontalToolStripMenuItemHorizontalFlip
-            // 
-            this.horizontalToolStripMenuItemHorizontalFlip.Name = "horizontalToolStripMenuItemHorizontalFlip";
-            this.horizontalToolStripMenuItemHorizontalFlip.Size = new System.Drawing.Size(135, 22);
-            this.horizontalToolStripMenuItemHorizontalFlip.Text = "Horizontal";
-            this.horizontalToolStripMenuItemHorizontalFlip.Click += new System.EventHandler(this.horizontalToolStripMenuItemHorizontalFlip_Click);
-            // 
-            // verticalToolStripMenuItemVerticalFlip
-            // 
-            this.verticalToolStripMenuItemVerticalFlip.Name = "verticalToolStripMenuItemVerticalFlip";
-            this.verticalToolStripMenuItemVerticalFlip.Size = new System.Drawing.Size(135, 22);
-            this.verticalToolStripMenuItemVerticalFlip.Text = "Vertical";
-            this.verticalToolStripMenuItemVerticalFlip.Click += new System.EventHandler(this.verticalToolStripMenuItemVerticalFlip_Click);
-            // 
             // toolStripMainTools
             // 
             this.toolStripMainTools.AutoSize = false;
@@ -372,7 +387,7 @@
             this.toolStripTextBoxPenSize});
             this.toolStripMainTools.Location = new System.Drawing.Point(0, 25);
             this.toolStripMainTools.Name = "toolStripMainTools";
-            this.toolStripMainTools.Size = new System.Drawing.Size(1010, 46);
+            this.toolStripMainTools.Size = new System.Drawing.Size(908, 46);
             this.toolStripMainTools.TabIndex = 3;
             this.toolStripMainTools.Text = "toolStrip2";
             // 
@@ -533,7 +548,7 @@
             this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel1.Location = new System.Drawing.Point(0, 71);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1010, 216);
+            this.panel1.Size = new System.Drawing.Size(908, 257);
             this.panel1.TabIndex = 4;
             // 
             // pictureBoxMain
@@ -558,10 +573,10 @@
             this.toolStripStatusLabelCoordinate,
             this.toolStripStatusLabelSizeImg,
             this.toolStripProgressBar});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 287);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 328);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 16, 0);
-            this.statusStrip1.Size = new System.Drawing.Size(1010, 25);
+            this.statusStrip1.Size = new System.Drawing.Size(908, 25);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -586,27 +601,12 @@
             this.toolStripProgressBar.Name = "toolStripProgressBar";
             this.toolStripProgressBar.Size = new System.Drawing.Size(350, 19);
             // 
-            // toolStripSeparator6
-            // 
-            this.toolStripSeparator6.Name = "toolStripSeparator6";
-            this.toolStripSeparator6.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator7
-            // 
-            this.toolStripSeparator7.Name = "toolStripSeparator7";
-            this.toolStripSeparator7.Size = new System.Drawing.Size(6, 25);
-            // 
-            // toolStripSeparator8
-            // 
-            this.toolStripSeparator8.Name = "toolStripSeparator8";
-            this.toolStripSeparator8.Size = new System.Drawing.Size(6, 25);
-            // 
             // FormEditor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
-            this.ClientSize = new System.Drawing.Size(1010, 312);
+            this.ClientSize = new System.Drawing.Size(908, 353);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.toolStripMainTools);
