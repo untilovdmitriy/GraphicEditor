@@ -949,5 +949,27 @@ namespace GraphicEditor
             pictureBoxMain.Image = currentImage;
         }
 
+        private void sharpnessToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            currentImage = pictureBoxMain.Image.Clone() as Bitmap;
+
+            toolStripProgressBar.Minimum = 0;
+            toolStripProgressBar.Maximum = currentImage.Width * currentImage.Height;
+            toolStripProgressBar.Step = currentImage.Width;
+
+            undoImage = currentImage.Clone() as Bitmap;
+
+            BackgroundWorker BW = new BackgroundWorker();
+
+            BW.WorkerReportsProgress = true;
+            BW.WorkerSupportsCancellation = true;
+            BW.DoWork += delegate(object s, DoWorkEventArgs ev)
+            {
+                currentImage = ImageEditor.Sharpen(pictureBoxMain.Image as Bitmap, 0.5, ref BW);
+            };
+            BW.ProgressChanged += BW_ProgressChanged;
+            BW.RunWorkerCompleted += BW_RunWorkerCompleted;
+            BW.RunWorkerAsync();
+        }
     }
 }

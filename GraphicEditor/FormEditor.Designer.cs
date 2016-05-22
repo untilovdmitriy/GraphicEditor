@@ -177,7 +177,7 @@
             this.horizontalToolStripMenuItemRotate90Right,
             this.degreeToLeftToolStripMenuItemRotate90Left});
             this.rotateToolStripMenuItem.Name = "rotateToolStripMenuItem";
-            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.rotateToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.rotateToolStripMenuItem.Text = "Rotate";
             // 
             // horizontalToolStripMenuItemRotate90Right
@@ -200,7 +200,7 @@
             this.horizontalToolStripMenuItemHorizontalFlip,
             this.verticalToolStripMenuItemVerticalFlip});
             this.flipToolStripMenuItem.Name = "flipToolStripMenuItem";
-            this.flipToolStripMenuItem.Size = new System.Drawing.Size(113, 22);
+            this.flipToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.flipToolStripMenuItem.Text = "Flip";
             // 
             // horizontalToolStripMenuItemHorizontalFlip
@@ -303,8 +303,8 @@
             // 
             this.sharpnessToolStripMenuItem.Name = "sharpnessToolStripMenuItem";
             this.sharpnessToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.sharpnessToolStripMenuItem.Text = "Sharpness";
-            this.sharpnessToolStripMenuItem.Visible = false;
+            this.sharpnessToolStripMenuItem.Text = "Sharpen";
+            this.sharpnessToolStripMenuItem.Click += new System.EventHandler(this.sharpnessToolStripMenuItem_Click);
             // 
             // blurToolStripMenuItem
             // 
