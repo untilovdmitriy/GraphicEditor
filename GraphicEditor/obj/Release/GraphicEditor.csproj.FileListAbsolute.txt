@@ -28,3 +28,4 @@ C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.BrightnessContrast.
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.ColorBalance.resources
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.GammaCorrection.resources
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.HueSaturation.resources
+C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.csprojResolveAssemblyReference.cache

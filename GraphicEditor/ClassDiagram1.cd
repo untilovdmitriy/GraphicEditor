@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="GraphicEditor.Messages">
+    <Position X="7.5" Y="0.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAoAAAAAEAAAAAAAAAAAAAAAAAAAAAAAgEAAAAAAAAA=</HashCode>
+      <FileName>Additional.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicEditor.BrightnessContrast" BaseTypeListCollapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AiABACAAACAAABAwAAGIBAAKEAAAAAACACAgAAAAAgA=</HashCode>
+      <FileName>BrightnessContrast.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphicEditor.ColorBalance" BaseTypeListCollapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAgAABACAAABAkAAGIJIACkIAAAAAAQCAAEABBCgA=</HashCode>
+      <FileName>ColorBalance.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphicEditor.CreateNewForm">
+    <Position X="7.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAABAEAACABBCCEABAAAAIACAAAAEAAEA=</HashCode>
+      <FileName>CreateNewForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicEditor.FormEditor">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>5QEKE/2wSCpPmxEDA52rSxBDGBDjM8qlkBZRScm2gIk=</HashCode>
+      <FileName>FormEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicEditor.GammaCorrection" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACEAAAAAACAAABAgAAGIBAQCEAAAMAAAACAAAEAAAgA=</HashCode>
+      <FileName>GammaCorrection.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphicEditor.HueSaturation" BaseTypeListCollapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAAAAAACAIABEgAAGIBAACGAAAAAAACCAAAAAAQgA=</HashCode>
+      <FileName>HueSaturation.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="GraphicEditor.ImageEditor">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <NestedTypes>
+      <Delegate Name="GraphicEditor.ImageEditor.ColorCorrection" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ImageEditor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+      <Delegate Name="GraphicEditor.ImageEditor.Effect" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>ImageEditor.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Delegate>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAIkACQEAAAAAAQACgAAAAAAACAAARAAEA=</HashCode>
+      <FileName>ImageEditor.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicEditor.Program">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicEditor.Properties.Resources">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACAAEAAAIqIAAAAAAAAJEAEAAUAAAAAAAQAAAAIAAMA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="GraphicEditor.Properties.Settings">
+    <Position X="10" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Interface Name="GraphicEditor.ICorrection">
+    <Position X="4" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAgA=</HashCode>
+      <FileName>ICorrection.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="GraphicEditor.Tools">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAMAAAAAACAAAAAAAAAIACEAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FormEditor.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="GraphicEditor.FillingMode">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>FormEditor.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
