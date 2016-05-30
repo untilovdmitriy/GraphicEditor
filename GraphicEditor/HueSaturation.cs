@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 
 namespace GraphicEditor
@@ -49,7 +50,7 @@ namespace GraphicEditor
         private void trackBarSaturation_Scroll(object sender, EventArgs e)
         {
             textBoxSaturation.Text = trackBarSaturation.Value.ToString();
-            pictureBoxMini.Image = ImageEditor.Correction((Bitmap)currentImage, ImageEditor.SetSaturation, (short)((TrackBar)sender).Value);
+            pictureBoxMini.Image = ImageEditor.Correction((Bitmap)currentImage, ImageEditor.SetSaturation, (short)((TrackBar)sender).Value);             
         }
 
         private void textBoxSaturation_TextChanged(object sender, EventArgs e)
@@ -58,6 +59,26 @@ namespace GraphicEditor
             {
                 trackBarSaturation.Value = Convert.ToInt16(((TextBox)sender).Text);
                 trackBarSaturation_Scroll(trackBarSaturation, e);
+            }
+            catch (Exception)
+            {
+                if (((TextBox)sender).Text != "-") MessageBox.Show(Messages.INCORRECT_VALUE);
+            }
+        }
+
+        private void trackBarHue_Scroll(object sender, EventArgs e)
+        {
+            textBoxHue.Text = trackBarHue.Value.ToString();
+            pictureBoxMini.Image = ImageEditor.Correction((Bitmap)currentImage, ImageEditor.SetHue, (short)((TrackBar)sender).Value);             
+        
+        }
+
+        private void textBoxHue_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                trackBarHue.Value = Convert.ToInt16(((TextBox)sender).Text);
+                trackBarHue_Scroll(trackBarSaturation, e);
             }
             catch (Exception)
             {

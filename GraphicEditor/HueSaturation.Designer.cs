@@ -103,8 +103,8 @@
             this.trackBarSaturation.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarSaturation.Dock = System.Windows.Forms.DockStyle.Left;
             this.trackBarSaturation.Location = new System.Drawing.Point(3, 20);
-            this.trackBarSaturation.Maximum = 255;
-            this.trackBarSaturation.Minimum = -255;
+            this.trackBarSaturation.Maximum = 100;
+            this.trackBarSaturation.Minimum = -100;
             this.trackBarSaturation.Name = "trackBarSaturation";
             this.trackBarSaturation.Size = new System.Drawing.Size(288, 22);
             this.trackBarSaturation.TabIndex = 8;
@@ -131,17 +131,19 @@
             this.textBoxHue.Size = new System.Drawing.Size(38, 24);
             this.textBoxHue.TabIndex = 9;
             this.textBoxHue.Text = "0";
+            this.textBoxHue.TextChanged += new System.EventHandler(this.textBoxHue_TextChanged);
             // 
             // trackBarHue
             // 
             this.trackBarHue.Cursor = System.Windows.Forms.Cursors.Hand;
             this.trackBarHue.Dock = System.Windows.Forms.DockStyle.Left;
             this.trackBarHue.Location = new System.Drawing.Point(3, 20);
-            this.trackBarHue.Maximum = 255;
-            this.trackBarHue.Minimum = -255;
+            this.trackBarHue.Maximum = 170;
+            this.trackBarHue.Minimum = -180;
             this.trackBarHue.Name = "trackBarHue";
             this.trackBarHue.Size = new System.Drawing.Size(288, 22);
             this.trackBarHue.TabIndex = 8;
+            this.trackBarHue.Scroll += new System.EventHandler(this.trackBarHue_Scroll);
             // 
             // HueSaturation
             // 

@@ -21,8 +21,8 @@ namespace GraphicEditor
         }
         private static byte ToByte(double Val)
         {
-            if (Val > 255) Val = 255;
-            else if (Val < 0) Val = 0;
+            if (Val > 255) Val = 255d;
+            else if (Val < 0) Val = 0d;
             return (byte)Val;
         }
 
@@ -151,6 +151,23 @@ namespace GraphicEditor
         }
 
         /// <summary>
+        /// цветовой тон
+        /// </summary>
+        /// <param name="oldPixel">старый цвет пиксела</param>
+        /// <param name="gamma">значение насыщенности</param>
+        /// <returns>новый цвет пиксела</returns>
+        public static Color SetHue(Color oldPixel, short hue)
+        {
+            double h = 0;
+            double s = 0;
+            double v = 0;
+
+            ColorToHSV(oldPixel, out h, out s, out v);
+
+            return ColorFromHSV(h + hue, s, v);
+        }
+
+        /// <summary>
         /// насыщенность
         /// </summary>
         /// <param name="oldPixel">старый цвет пиксела</param>
@@ -158,13 +175,65 @@ namespace GraphicEditor
         /// <returns>новый цвет пиксела</returns>
         public static Color SetSaturation(Color oldPixel, short saturation)
         {
-            byte R = oldPixel.R;
-            byte G = oldPixel.G;
-            byte B = oldPixel.B;
+            double h = 0;
+            double s = 0;
+            double v = 0;
 
-            double S = (Math.Max(Math.Max(R, G), B) - Math.Min(Math.Min(R, G), B)) / Math.Max(Math.Max(R, G), B);
+            ColorToHSV(oldPixel, out h, out s, out v);
 
-            return Color.FromArgb(oldPixel.A, ToByte(Math.Pow(R, S)), ToByte(Math.Pow(G, S)), ToByte(Math.Pow(B, S)));
+            double newSat = s + saturation / 100.0 < 0 ? 0 : s + saturation / 100.0;
+
+            return ColorFromHSV(h, newSat, v);
+        }
+
+        public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
+        {
+            int max = Math.Max(color.R, Math.Max(color.G, color.B));
+            int min = Math.Min(color.R, Math.Min(color.G, color.B));
+
+            hue = color.GetHue();
+            saturation = (max == 0) ? 0 : 1d - (1d * min / max);
+            value = max / 255d;
+        }
+
+        public static Color ColorFromHSV(double H, double S, double V)
+        {
+            int hi = Convert.ToInt32(Math.Floor(H / 60)) % 6;
+            S *= 100;
+            V *= 255;
+
+            double Vmin = ((100 - S) * V) / 100;
+            double alpha = (V - Vmin) * ((H % 60) / 60);
+            double Vinc = Vmin + alpha;
+            double Vdec = V - alpha;
+
+            switch (hi)
+            {
+                case 0:
+                    {
+                        return Color.FromArgb(ToByte(V), ToByte(Vinc), ToByte(Vmin));
+                    }
+                case 1:
+                    {
+                        return Color.FromArgb(ToByte(Vdec), ToByte(V), ToByte(Vmin));
+                    }
+                case 2:
+                    {
+                        return Color.FromArgb(ToByte(Vmin), ToByte(V), ToByte(Vinc));
+                    }
+                case 3:
+                    {
+                        return Color.FromArgb(ToByte(Vmin), ToByte(Vdec), ToByte(V));
+                    }
+                case 4:
+                    {
+                        return Color.FromArgb(ToByte(Vinc), ToByte(Vmin), ToByte(V));
+                    }
+                default:
+                    {
+                        return Color.FromArgb(ToByte(V), ToByte(Vmin), ToByte(Vdec));
+                    }
+            }
         }
 
         #endregion
