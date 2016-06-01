@@ -9,12 +9,99 @@ namespace GraphicEditor
     struct RGB
     {
         public byte R, G, B;
+
+        #region To Byte Converters
+        public byte ToByte(double b)
+        {
+            if (b > 255) return 255;
+            if (b < 0) return 0;
+            return Convert.ToByte(b);
+        }
+
+        public byte ToByte(int b)
+        {
+            if (b > 255) return 255;
+            if (b < 0) return 0;
+            return Convert.ToByte(b);
+        }
+        #endregion
+
+        #region Constructors
+        public RGB(int r, int g, int b)
+        {
+            R = G = B = 0;
+            R = ToByte(r);
+            G = ToByte(g);
+            B = ToByte(b);
+        }
+
+        public RGB(double r, double g, double b)
+        {
+            R = G = B = 0;
+            R = ToByte(r);
+            G = ToByte(g);
+            B = ToByte(b);
+        }   
+
         public RGB(byte r, byte g, byte b)
         {
             R = r;
             G = g;
             B = b;
         }
+        #endregion
+
+        #region Model converters
+        public void RGBToHSV(out double hue, out double saturation, out double value)
+        {
+            int max = Math.Max(R, Math.Max(G, B));
+            int min = Math.Min(R, Math.Min(G, B));
+
+            hue = Color.FromArgb(R, G, B).GetHue();
+            saturation = (max == 0) ? 0 : 1d - (1d * min / max);
+            value = max / 255d;
+        }
+
+        public static RGB HSVToRGB(double H, double S, double V)
+        {
+            int hi = Convert.ToInt32(Math.Floor(H / 60)) % 6;
+            S *= 100;
+            V *= 255;
+
+            double Vmin = ((100 - S) * V) / 100;
+            double alpha = (V - Vmin) * ((H % 60) / 60);
+            double Vinc = Vmin + alpha;
+            double Vdec = V - alpha;
+
+            switch (hi)
+            {
+                case 0:
+                    {
+                        return new RGB(V, Vinc, Vmin);
+                    }
+                case 1:
+                    {
+                        return new RGB(Vdec, V, Vmin);
+                    }
+                case 2:
+                    {
+                        return new RGB(Vmin, V, Vinc);
+                    }
+                case 3:
+                    {
+                        return new RGB(Vmin, Vdec, V);
+                    }
+                case 4:
+                    {
+                        return new RGB(Vinc, Vmin, V);
+                    }
+                default:
+                    {
+                        return new RGB(V, Vmin, Vdec);
+                    }
+            }
+        }
+        #endregion
     }
 
     class ImageEditor
@@ -39,6 +126,7 @@ namespace GraphicEditor
 
         #endregion
 
+        #region delegates
         /// <summary>
         /// делегат для применения функций цветовой коррекции
         /// </summary>
@@ -53,7 +141,9 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <returns>новый цвет пиксела</returns>
         public delegate RGB Effect(byte r, byte g, byte b);
+        #endregion
 
+        #region функции для применения эффектов
         /// <summary>
         /// функция коррекции которая принимает делегат и его параметр
         /// </summary>
@@ -98,20 +188,6 @@ namespace GraphicEditor
         /// <param name="BW">объект типа BackgroundWorker для динамического отображения процесса на прогресс-бар в отдельном потоке</param>
         public static void ApplyEffect(ref Bitmap bmp, Effect effect, ref BackgroundWorker BW)
         {
-            // Bitmap img = new Bitmap(bmp);
-            /*
-            for (int x = 0; x <= img.Width - 1; x++)
-            {
-                for (int y = 0; y <= img.Height - 1; y++)
-                {
-                    Color oldPixel = (img as Bitmap).GetPixel(x, y);
-                    Color newPixel = ;
-                    (img as Bitmap).SetPixel(x, y, newPixel);
-                }
-                
-            }*/
-            //return img;
-
             // Lock the bitmap's bits.  
             Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
             System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp.PixelFormat);
@@ -136,6 +212,9 @@ namespace GraphicEditor
             // Unlock the bits.
             bmp.UnlockBits(bmpData);
         }
+        #endregion
+
+        #region Цветовая коррекция
 
         /// <summary>
         /// гамма-коррекция
@@ -156,14 +235,12 @@ namespace GraphicEditor
                 ToByte(Math.Pow((g / 255.0), (double)(200 - gamma) / 100) * 255);
 
             b = gamma < 100 ?
-                ToByte(Math.Pow((b/ 255.0), 100 - gamma) * 255)
+                ToByte(Math.Pow((b / 255.0), 100 - gamma) * 255)
                 :
                 ToByte(Math.Pow((b / 255.0), (double)(200 - gamma) / 100) * 255);
 
             return new RGB(r, g, b);
         }
-
-        #region Цветовая коррекция
 
         /// <summary>
         /// яркость
@@ -210,9 +287,9 @@ namespace GraphicEditor
             double s = 0;
             double v = 0;
 
-            RGBToHSV(r,g,b, out h, out s, out v);
+            new RGB(r,g,b).RGBToHSV(out h, out s, out v);
 
-            return HSVToRGB(h + hue, s, v);
+            return RGB.HSVToRGB(h + hue, s, v);
         }
 
         /// <summary>
@@ -227,63 +304,12 @@ namespace GraphicEditor
             double s = 0;
             double v = 0;
 
-            RGBToHSV(r,g,b, out h, out s, out v);
+            new RGB(r, g, b).RGBToHSV(out h, out s, out v);
 
             double newSat = s + saturation / 100.0 < 0 ? 0 : s + saturation / 100.0;
 
-            return HSVToRGB(h, newSat, v);
-        }
-
-        public static void RGBToHSV(byte r, byte g, byte b, out double hue, out double saturation, out double value)
-        {
-            int max = Math.Max(r, Math.Max(g, b));
-            int min = Math.Min(r, Math.Min(g, b));
-
-            hue = Color.FromArgb(r,g,b).GetHue();
-            saturation = (max == 0) ? 0 : 1d - (1d * min / max);
-            value = max / 255d;
-        }
-
-        public static RGB HSVToRGB(double H, double S, double V)
-        {
-            int hi = Convert.ToInt32(Math.Floor(H / 60)) % 6;
-            S *= 100;
-            V *= 255;
-
-            double Vmin = ((100 - S) * V) / 100;
-            double alpha = (V - Vmin) * ((H % 60) / 60);
-            double Vinc = Vmin + alpha;
-            double Vdec = V - alpha;
-
-            switch (hi)
-            {
-                case 0:
-                    {
-                        return new RGB(ToByte(V), ToByte(Vinc), ToByte(Vmin));
-                    }
-                case 1:
-                    {
-                        return new RGB(ToByte(Vdec), ToByte(V), ToByte(Vmin));
-                    }
-                case 2:
-                    {
-                        return new RGB(ToByte(Vmin), ToByte(V), ToByte(Vinc));
-                    }
-                case 3:
-                    {
-                        return new RGB(ToByte(Vmin), ToByte(Vdec), ToByte(V));
-                    }
-                case 4:
-                    {
-                        return new RGB(ToByte(Vinc), ToByte(Vmin), ToByte(V));
-                    }
-                default:
-                    {
-                        return new RGB(ToByte(V), ToByte(Vmin), ToByte(Vdec));
-                    }
-            }
-        }
-
+            return RGB.HSVToRGB(h, newSat, v);
+        }        
         #endregion
 
         #region Цветовой баланс
@@ -322,6 +348,8 @@ namespace GraphicEditor
         }
 
         #endregion
+
+        #region Эффекты
 
         /// <summary>
         /// Перевод в чернобелый
@@ -502,5 +530,6 @@ namespace GraphicEditor
             }
             return null;
         }
+        #endregion
     }
 }

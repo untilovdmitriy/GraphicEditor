@@ -7,14 +7,14 @@
     <framework targetVersion="4.5" profile="Full" supportedRuntime="4.0.30319" />
   </compatibleFrameworks>
   <dependency>
-    <dependentAssembly dependencyType="install" codebase="GraphicEditor.exe.manifest" size="4599">
+    <dependentAssembly dependencyType="install" codebase="Application Files\GraphicEditor_1_0_0_4\GraphicEditor.exe.manifest" size="4599">
       <assemblyIdentity name="GraphicEditor.exe" version="1.0.0.4" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>3AUh1WQSwX/XDktoaBOAboDglW8RVL10V1HGA7c5VwQ=</dsig:DigestValue>
+        <dsig:DigestValue>M/n0pkNt46KLZQV8H0vvIDOus/qHlkfLXmjC5KqsVPQ=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

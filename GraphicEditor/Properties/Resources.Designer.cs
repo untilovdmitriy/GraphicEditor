@@ -81,6 +81,16 @@ namespace GraphicEditor.Properties {
         }
         
         /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] horizontal_resizer {
+            get {
+                object obj = ResourceManager.GetObject("horizontal_resizer", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Поиск локализованного ресурса типа System.Drawing.Icon, аналогичного (Значок).
         /// </summary>
         internal static System.Drawing.Icon icon {
@@ -167,6 +177,16 @@ namespace GraphicEditor.Properties {
             get {
                 object obj = ResourceManager.GetObject("return_undo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Поиск локализованного ресурса типа System.Byte[].
+        /// </summary>
+        internal static byte[] vertical_resizer {
+            get {
+                object obj = ResourceManager.GetObject("vertical_resizer", resourceCulture);
+                return ((byte[])(obj));
             }
         }
         

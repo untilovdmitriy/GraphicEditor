@@ -579,14 +579,17 @@ namespace GraphicEditor
 
         private void pictureBoxMain_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!IsMouseUp)
+            if (activeTool == Tools.default_cursor)
             {
-                pictureBoxMain.Width = ControlSize.Width + e.X - MouseDownPoint.X;
-                pictureBoxMain.Height = ControlSize.Height + e.Y - MouseDownPoint.Y;
-                SizeChange();
+                DetectResize(e);
+                if (!IsMouseUp)
+                {
+                    pictureBoxMain.Width = ControlSize.Width + e.X - MouseDownPoint.X;
+                    pictureBoxMain.Height = ControlSize.Height + e.Y - MouseDownPoint.Y;
+                    SizeChange();
+                }
+                toolStripStatusLabelCoordinate.Text = string.Format("X, Y: {0}, {1} px", e.X, e.Y);
             }
-
-            toolStripStatusLabelCoordinate.Text = string.Format("X, Y: {0}, {1} px", e.X, e.Y);
 
             if (drawingMode)
             {
@@ -685,8 +688,27 @@ namespace GraphicEditor
             }
         }
 
+        private void DetectResize(MouseEventArgs e)
+        {
+            if (activeTool == Tools.default_cursor)
+            {
+                if (e.X > pictureBoxMain.Size.Width - 4 && e.X < pictureBoxMain.Size.Width)
+                {
+                    this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.horizontal_resizer));
+                }
+                else if (e.Y > pictureBoxMain.Size.Height - 4 && e.Y < pictureBoxMain.Size.Height)
+                {
+                    this.Cursor = new Cursor(new System.IO.MemoryStream(Properties.Resources.vertical_resizer));
+                }
+                else
+                {
+                    this.Cursor = Cursors.Default;
+                }
+            }
+        }
+
         private void SizeChange()
-        {            
+        {
             currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
             graphics = Graphics.FromImage(currentImage);
             graphics.Clear(color2);
@@ -814,15 +836,18 @@ namespace GraphicEditor
         /// </summary>
         private void FormEditor_FormClosing(object sender, FormClosingEventArgs e)
         {
-            var dlgResult = MessageBox.Show(Messages.WANT_SAVE_QUESTION, Messages.WANT_SAVE_CAPTION, MessageBoxButtons.YesNoCancel);
+            if (undoImage != null)
+            {
+                var dlgResult = MessageBox.Show(Messages.WANT_SAVE_QUESTION, Messages.WANT_SAVE_CAPTION, MessageBoxButtons.YesNoCancel);
 
-            if (dlgResult == System.Windows.Forms.DialogResult.Yes)
-            {
-                сохранитьToolStripButton_Click(new object(), new EventArgs());
-            }
-            else if (dlgResult == System.Windows.Forms.DialogResult.Cancel)
-            {
-                e.Cancel = true;
+                if (dlgResult == System.Windows.Forms.DialogResult.Yes)
+                {
+                    сохранитьToolStripButton_Click(new object(), new EventArgs());
+                }
+                else if (dlgResult == System.Windows.Forms.DialogResult.Cancel)
+                {
+                    e.Cancel = true;
+                }
             }
         }
 
@@ -937,7 +962,6 @@ namespace GraphicEditor
         {
             undoImage = currentImage.Clone() as Bitmap;
             currentImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            //pictureBoxMain.Size = currentImage.Size;
             pictureBoxMain.Image = currentImage;
             redoImage = currentImage.Clone() as Bitmap;
         }
@@ -946,7 +970,6 @@ namespace GraphicEditor
         {
             undoImage = currentImage.Clone() as Bitmap;
             currentImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            //pictureBoxMain.Size = currentImage.Size;
             pictureBoxMain.Image = currentImage;
             redoImage = currentImage.Clone() as Bitmap;
         }

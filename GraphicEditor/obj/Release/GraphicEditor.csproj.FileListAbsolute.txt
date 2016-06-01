@@ -28,3 +28,4 @@ C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.exe.manifest
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.application
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.exe
 C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.pdb
+C:\Git\GraphicEditor\GraphicEditor\obj\Release\GraphicEditor.csprojResolveAssemblyReference.cache
