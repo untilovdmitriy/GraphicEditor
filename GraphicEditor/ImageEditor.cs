@@ -6,6 +6,17 @@ using System.Runtime.InteropServices;
 
 namespace GraphicEditor
 {
+    struct RGB
+    {
+        public byte R, G, B;
+        public RGB(byte r, byte g, byte b)
+        {
+            R = r;
+            G = g;
+            B = b;
+        }
+    }
+
     class ImageEditor
     {
         #region вспомогательные функции
@@ -34,14 +45,14 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="colorChange">изменения цвета (контраст/яркость/насыщенность/RGB каналы и пр.)</param>
         /// <returns>новый цвет пиксела</returns>
-        public delegate Color ColorCorrection(Color oldPixel, short colorChange);
+        public delegate RGB ColorCorrection(byte r, byte g, byte b, short colorChange);
 
         /// <summary>
         /// делегат для применения эффектов (негатив, черно-белый)
         /// </summary>
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <returns>новый цвет пиксела</returns>
-        public delegate Color Effect(Color oldPixel);
+        public delegate RGB Effect(byte r, byte g, byte b);
 
         /// <summary>
         /// функция коррекции которая принимает делегат и его параметр
@@ -50,19 +61,33 @@ namespace GraphicEditor
         /// <param name="corrector">делегат функции (гамма,яркость,контраст и пр.)</param>
         /// <param name="correctorParam">параметр (гамма,яркость,контраст и пр.)</param>
         /// <returns>измененное изображение</returns>
-        public static Bitmap Correction(Bitmap bmp, ColorCorrection corrector, short correctorParam)
+        public static Bitmap Correction(Bitmap img, ColorCorrection corrector, short correctorParam)
         {
-            Bitmap img = new Bitmap(bmp);
-            for (int x = 0; x <= img.Width - 1; x++)
+            Bitmap bmp = new Bitmap(img);
+            // Lock the bitmap's bits.  
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp.PixelFormat);
+            // Get the address of the first line.
+            IntPtr ptr = bmpData.Scan0;
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+            // Copy the RGB values into the array.
+            System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+            // Set every third value to 255. A 24bpp bitmap will look red.  
+            for (int counter = 2; counter < rgbValues.Length; counter += 4)
             {
-                for (int y = 0; y <= img.Height - 1; y++)
-                {
-                    Color oldPixel = img.GetPixel(x, y);
-                    Color newPixel = corrector.Invoke(oldPixel, correctorParam);
-                    img.SetPixel(x, y, newPixel);
-                }
+                RGB rgb = corrector.Invoke(rgbValues[counter - 2], rgbValues[counter - 1], rgbValues[counter], correctorParam);
+                rgbValues[counter - 2] = rgb.R;
+                rgbValues[counter - 1] = rgb.G;
+                rgbValues[counter] = rgb.B;
             }
-            return img;
+            // Copy the RGB values back to the bitmap
+            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+            // Unlock the bits.
+            bmp.UnlockBits(bmpData);
+
+            return bmp;
         }
 
         /// <summary>
@@ -71,20 +96,45 @@ namespace GraphicEditor
         /// <param name="img">старое изображение</param>
         /// <param name="effect">делегат функции эффекта (негатив, черно-белый и пр.)</param>
         /// <param name="BW">объект типа BackgroundWorker для динамического отображения процесса на прогресс-бар в отдельном потоке</param>
-        public static void ApplyEffect(ref Bitmap img, Effect effect, ref BackgroundWorker BW)
+        public static void ApplyEffect(ref Bitmap bmp, Effect effect, ref BackgroundWorker BW)
         {
             // Bitmap img = new Bitmap(bmp);
+            /*
             for (int x = 0; x <= img.Width - 1; x++)
             {
                 for (int y = 0; y <= img.Height - 1; y++)
                 {
                     Color oldPixel = (img as Bitmap).GetPixel(x, y);
-                    Color newPixel = effect.Invoke(oldPixel);
+                    Color newPixel = ;
                     (img as Bitmap).SetPixel(x, y, newPixel);
                 }
-                BW.ReportProgress((x / img.Width) * 100);
-            }
+                
+            }*/
             //return img;
+
+            // Lock the bitmap's bits.  
+            Rectangle rect = new Rectangle(0, 0, bmp.Width, bmp.Height);
+            System.Drawing.Imaging.BitmapData bmpData = bmp.LockBits(rect, System.Drawing.Imaging.ImageLockMode.ReadWrite, bmp.PixelFormat);
+            // Get the address of the first line.
+            IntPtr ptr = bmpData.Scan0;
+            // Declare an array to hold the bytes of the bitmap.
+            int bytes = Math.Abs(bmpData.Stride) * bmp.Height;
+            byte[] rgbValues = new byte[bytes];
+            // Copy the RGB values into the array.
+            System.Runtime.InteropServices.Marshal.Copy(ptr, rgbValues, 0, bytes);
+            // Set every third value to 255. A 24bpp bitmap will look red.  
+            for (int counter = 2; counter < rgbValues.Length; counter += 4)
+            {
+                RGB rgb = effect.Invoke(rgbValues[counter - 2], rgbValues[counter - 1], rgbValues[counter]);
+                rgbValues[counter - 2] = rgb.R;
+                rgbValues[counter - 1] = rgb.G;
+                rgbValues[counter] = rgb.B;
+                //if (counter %1 == 0) BW.ReportProgress((counter / rgbValues.Length) * 100);
+            }
+            // Copy the RGB values back to the bitmap
+            System.Runtime.InteropServices.Marshal.Copy(rgbValues, 0, ptr, bytes);
+            // Unlock the bits.
+            bmp.UnlockBits(bmpData);
         }
 
         /// <summary>
@@ -93,24 +143,24 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение гаммы</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetGamma(Color oldPixel, short gamma)
+        public static RGB SetGamma(byte r, byte g, byte b, short gamma)
         {
-            byte r = gamma < 100 ?
-                ToByte(Math.Pow((oldPixel.R / 255.0), 100 - gamma) * 255)
+            r = gamma < 100 ?
+                ToByte(Math.Pow((r / 255.0), 100 - gamma) * 255)
                 :
-                ToByte(Math.Pow((oldPixel.R / 255.0), (double)(200 - gamma) / 100) * 255);
+                ToByte(Math.Pow((r / 255.0), (double)(200 - gamma) / 100) * 255);
 
-            byte g = gamma < 100 ?
-                ToByte(Math.Pow((oldPixel.G / 255.0), 100 - gamma) * 255)
+            g = gamma < 100 ?
+                ToByte(Math.Pow((g / 255.0), 100 - gamma) * 255)
                 :
-                ToByte(Math.Pow((oldPixel.G / 255.0), (double)(200 - gamma) / 100) * 255);
+                ToByte(Math.Pow((g / 255.0), (double)(200 - gamma) / 100) * 255);
 
-            byte b = gamma < 100 ?
-                ToByte(Math.Pow((oldPixel.B / 255.0), 100 - gamma) * 255)
+            b = gamma < 100 ?
+                ToByte(Math.Pow((b/ 255.0), 100 - gamma) * 255)
                 :
-                ToByte(Math.Pow((oldPixel.B / 255.0), (double)(200 - gamma) / 100) * 255);
+                ToByte(Math.Pow((b / 255.0), (double)(200 - gamma) / 100) * 255);
 
-            return Color.FromArgb(oldPixel.A, r, g, b);
+            return new RGB(r, g, b);
         }
 
         #region Цветовая коррекция
@@ -121,9 +171,9 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение яркости</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetBrightness(Color oldPixel, short brightness)
+        public static RGB SetBrightness(byte r, byte g, byte b, short brightness)
         {
-            return Color.FromArgb(oldPixel.A, ToByte(oldPixel.R + brightness), ToByte(oldPixel.G + brightness), ToByte(oldPixel.B + brightness));
+            return new RGB(ToByte(r + brightness), ToByte(g + brightness), ToByte(b + brightness));
         }
 
         /// <summary>
@@ -132,22 +182,20 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение контрастности</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetContrast(Color oldPixel, short contrast)
+        public static RGB SetContrast(byte r, byte g, byte b, short contrast)
         {
             return
                 contrast < 0 ?
 
-                Color.FromArgb(oldPixel.A,
-                ToByte((oldPixel.R * (100 + contrast) - 128 * contrast) / 100),
-                ToByte((oldPixel.G * (100 + contrast) - 128 * contrast) / 100),
-                ToByte((oldPixel.B * (100 + contrast) - 128 * contrast) / 100))
+                new RGB(ToByte((r * (100 + contrast) - 128 * contrast) / 100),
+                ToByte((g * (100 + contrast) - 128 * contrast) / 100),
+                ToByte((b * (100 + contrast) - 128 * contrast) / 100))
 
                 :
 
-                Color.FromArgb(oldPixel.A,
-                ToByte((oldPixel.R * 100 - 128 * contrast) / (100 - contrast)),
-                ToByte((oldPixel.G * 100 - 128 * contrast) / (100 - contrast)),
-                ToByte((oldPixel.B * 100 - 128 * contrast) / (100 - contrast)));
+                new RGB(ToByte((r * 100 - 128 * contrast) / (100 - contrast)),
+                ToByte((g * 100 - 128 * contrast) / (100 - contrast)),
+                ToByte((b * 100 - 128 * contrast) / (100 - contrast)));
         }
 
         /// <summary>
@@ -156,15 +204,15 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение насыщенности</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetHue(Color oldPixel, short hue)
+        public static RGB SetHue(byte r, byte g, byte b, short hue)
         {
             double h = 0;
             double s = 0;
             double v = 0;
 
-            ColorToHSV(oldPixel, out h, out s, out v);
+            RGBToHSV(r,g,b, out h, out s, out v);
 
-            return ColorFromHSV(h + hue, s, v);
+            return HSVToRGB(h + hue, s, v);
         }
 
         /// <summary>
@@ -173,30 +221,30 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение насыщенности</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetSaturation(Color oldPixel, short saturation)
+        public static RGB SetSaturation(byte r, byte g, byte b, short saturation)
         {
             double h = 0;
             double s = 0;
             double v = 0;
 
-            ColorToHSV(oldPixel, out h, out s, out v);
+            RGBToHSV(r,g,b, out h, out s, out v);
 
             double newSat = s + saturation / 100.0 < 0 ? 0 : s + saturation / 100.0;
 
-            return ColorFromHSV(h, newSat, v);
+            return HSVToRGB(h, newSat, v);
         }
 
-        public static void ColorToHSV(Color color, out double hue, out double saturation, out double value)
+        public static void RGBToHSV(byte r, byte g, byte b, out double hue, out double saturation, out double value)
         {
-            int max = Math.Max(color.R, Math.Max(color.G, color.B));
-            int min = Math.Min(color.R, Math.Min(color.G, color.B));
+            int max = Math.Max(r, Math.Max(g, b));
+            int min = Math.Min(r, Math.Min(g, b));
 
-            hue = color.GetHue();
+            hue = Color.FromArgb(r,g,b).GetHue();
             saturation = (max == 0) ? 0 : 1d - (1d * min / max);
             value = max / 255d;
         }
 
-        public static Color ColorFromHSV(double H, double S, double V)
+        public static RGB HSVToRGB(double H, double S, double V)
         {
             int hi = Convert.ToInt32(Math.Floor(H / 60)) % 6;
             S *= 100;
@@ -211,27 +259,27 @@ namespace GraphicEditor
             {
                 case 0:
                     {
-                        return Color.FromArgb(ToByte(V), ToByte(Vinc), ToByte(Vmin));
+                        return new RGB(ToByte(V), ToByte(Vinc), ToByte(Vmin));
                     }
                 case 1:
                     {
-                        return Color.FromArgb(ToByte(Vdec), ToByte(V), ToByte(Vmin));
+                        return new RGB(ToByte(Vdec), ToByte(V), ToByte(Vmin));
                     }
                 case 2:
                     {
-                        return Color.FromArgb(ToByte(Vmin), ToByte(V), ToByte(Vinc));
+                        return new RGB(ToByte(Vmin), ToByte(V), ToByte(Vinc));
                     }
                 case 3:
                     {
-                        return Color.FromArgb(ToByte(Vmin), ToByte(Vdec), ToByte(V));
+                        return new RGB(ToByte(Vmin), ToByte(Vdec), ToByte(V));
                     }
                 case 4:
                     {
-                        return Color.FromArgb(ToByte(Vinc), ToByte(Vmin), ToByte(V));
+                        return new RGB(ToByte(Vinc), ToByte(Vmin), ToByte(V));
                     }
                 default:
                     {
-                        return Color.FromArgb(ToByte(V), ToByte(Vmin), ToByte(Vdec));
+                        return new RGB(ToByte(V), ToByte(Vmin), ToByte(Vdec));
                     }
             }
         }
@@ -246,10 +294,9 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение канала R</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetR(Color oldPixel, short R)
+        public static RGB SetR(byte r, byte g, byte b, short R)
         {
-            return Color.FromArgb(oldPixel.A, ToByte(oldPixel.R + R), oldPixel.G, oldPixel.B);
-
+            return new RGB(ToByte(r + R), g, b);
         }
 
         /// <summary>
@@ -258,9 +305,9 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение канала G</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetG(Color oldPixel, short G)
+        public static RGB SetG(byte r, byte g, byte b, short G)
         {
-            return Color.FromArgb(oldPixel.A, oldPixel.R, ToByte(oldPixel.G + G), oldPixel.B);
+            return new RGB(r, ToByte(g + G), b);
         }
 
         /// <summary>
@@ -269,9 +316,9 @@ namespace GraphicEditor
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <param name="gamma">значение канала B</param>
         /// <returns>новый цвет пиксела</returns>
-        public static Color SetB(Color oldPixel, short B)
+        public static RGB SetB(byte r, byte g, byte b, short B)
         {
-            return Color.FromArgb(oldPixel.A, oldPixel.R, oldPixel.G, ToByte(oldPixel.B + B));
+            return new RGB(r, g, ToByte(b + b));
         }
 
         #endregion
@@ -281,10 +328,10 @@ namespace GraphicEditor
         /// </summary>
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <returns>цвет пиксела в оттенках серого</returns>
-        public static Color ToGrayscale(Color oldPixel)
+        public static RGB ToGrayscale(byte r, byte g, byte b)
         {
-            byte grayColor = ToByte(0.3 * oldPixel.R + 0.6 * oldPixel.G + 0.1 * oldPixel.G);
-            return Color.FromArgb(oldPixel.A, grayColor, grayColor, grayColor);
+            byte grayColor = ToByte(0.3 * r + 0.6 * g + 0.1 * b);
+            return new RGB(grayColor, grayColor, grayColor);
         }
 
         /// <summary>
@@ -292,9 +339,9 @@ namespace GraphicEditor
         /// </summary>
         /// <param name="oldPixel">старый цвет пиксела</param>
         /// <returns>инвертированный цвет пиксела</returns>
-        public static Color Inversion(Color oldPixel)
+        public static RGB Inversion(byte r, byte g, byte b)
         {
-            return Color.FromArgb(oldPixel.A, 255 - oldPixel.R, 255 - oldPixel.G, 255 - oldPixel.B);
+            return new RGB(ToByte(255 -  r), ToByte(255 - g), ToByte(255 - b));
         }
 
         /// <summary>

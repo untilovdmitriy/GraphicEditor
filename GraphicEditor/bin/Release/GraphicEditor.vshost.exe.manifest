@@ -43,14 +43,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GraphicEditor.exe" size="1112064">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="GraphicEditor.exe" size="1112576">
       <assemblyIdentity name="GraphicEditor" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>J6J4DHkVAkLdwiAFW8OejXR1h2nhrYOz7aAVvO9Vots=</dsig:DigestValue>
+        <dsig:DigestValue>Okh5ZgtZOMbtPCrXRcwaIU8FaXvOqkxusFtxXLuWdvU=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

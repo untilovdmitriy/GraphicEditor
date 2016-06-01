@@ -342,7 +342,7 @@ namespace GraphicEditor
             ShowImageSize();
 
             openFileDialog1.Filter = "Image files (*.jpg, *.jpeg, *.jpe, *.png, *.bmp, *.gif) | *.jpg; *.jpeg; *.jpe; *.png; *.bmp; *.gif";
-            saveFileDialog1.Filter += "Jpeg (*.jpeg) |*.jpeg| Bmp (*.bmp)|*.bmp|Png (*.png)|*.png| Gif (*.gif)|*.gif";
+            saveFileDialog1.Filter += "Jpeg (*.jpeg) |*.jpeg|Bmp (*.bmp)|*.bmp|Png (*.png)|*.png|Gif (*.gif)|*.gif";
         }
 
         void ShowImageSize()
@@ -583,6 +583,7 @@ namespace GraphicEditor
             {
                 pictureBoxMain.Width = ControlSize.Width + e.X - MouseDownPoint.X;
                 pictureBoxMain.Height = ControlSize.Height + e.Y - MouseDownPoint.Y;
+                SizeChange();
             }
 
             toolStripStatusLabelCoordinate.Text = string.Format("X, Y: {0}, {1} px", e.X, e.Y);
@@ -680,12 +681,16 @@ namespace GraphicEditor
                 drawingMode = false;
 
                 redoImage = pictureBoxMain.Image.Clone() as Bitmap;
+                currentImage = redoImage;
             }
         }
 
-        private void pictureBoxMain_SizeChanged(object sender, EventArgs e)
-        {
+        private void SizeChange()
+        {            
             currentImage = new Bitmap(pictureBoxMain.Width, pictureBoxMain.Height);
+            graphics = Graphics.FromImage(currentImage);
+            graphics.Clear(color2);
+            pictureBoxMain.Refresh();
 
             int w = pictureBoxMain.Image.Width < pictureBoxMain.Width ? pictureBoxMain.Image.Width : pictureBoxMain.Width;
             int h = pictureBoxMain.Image.Height < pictureBoxMain.Height ? pictureBoxMain.Image.Height : pictureBoxMain.Height;
@@ -905,41 +910,53 @@ namespace GraphicEditor
 
         private void toolStripButtonZoomPlus_Click(object sender, EventArgs e)
         {
+            undoImage = currentImage.Clone() as Bitmap;
             currentImage = new Bitmap(currentImage, new Size((int)(currentImage.Width * zoom), (int)(currentImage.Height * zoom)));
             pictureBoxMain.Image = currentImage;
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
         private void toolStripButtonZoomMinus_Click(object sender, EventArgs e)
         {
+            undoImage = currentImage.Clone() as Bitmap;
             currentImage = new Bitmap(currentImage, new Size((int)(currentImage.Width / zoom), (int)(currentImage.Height / zoom)));
             pictureBoxMain.Image = currentImage;
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
         private void horizontalToolStripMenuItemHorizontalFlip_Click(object sender, EventArgs e)
         {
+            undoImage = currentImage.Clone() as Bitmap;
             currentImage.RotateFlip(RotateFlipType.RotateNoneFlipX);
             pictureBoxMain.Size = currentImage.Size;
             pictureBoxMain.Image = currentImage;
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
         private void verticalToolStripMenuItemVerticalFlip_Click(object sender, EventArgs e)
         {
+            undoImage = currentImage.Clone() as Bitmap;
             currentImage.RotateFlip(RotateFlipType.RotateNoneFlipY);
-            pictureBoxMain.Size = currentImage.Size;
+            //pictureBoxMain.Size = currentImage.Size;
             pictureBoxMain.Image = currentImage;
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
         private void horizontalToolStripMenuItemRotate90Right_Click(object sender, EventArgs e)
         {
+            undoImage = currentImage.Clone() as Bitmap;
             currentImage.RotateFlip(RotateFlipType.Rotate90FlipNone);
-            pictureBoxMain.Size = currentImage.Size;
+            //pictureBoxMain.Size = currentImage.Size;
             pictureBoxMain.Image = currentImage;
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
         private void degreeToLeftToolStripMenuItemRotate90Left_Click(object sender, EventArgs e)
         {
+            undoImage = currentImage.Clone() as Bitmap;
             currentImage.RotateFlip(RotateFlipType.Rotate270FlipNone);
             pictureBoxMain.Image = currentImage;
+            redoImage = currentImage.Clone() as Bitmap;
         }
 
         private void sharpnessToolStripMenuItem_Click(object sender, EventArgs e)

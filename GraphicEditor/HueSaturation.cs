@@ -69,8 +69,7 @@ namespace GraphicEditor
         private void trackBarHue_Scroll(object sender, EventArgs e)
         {
             textBoxHue.Text = trackBarHue.Value.ToString();
-            pictureBoxMini.Image = ImageEditor.Correction((Bitmap)currentImage, ImageEditor.SetHue, (short)((TrackBar)sender).Value);             
-        
+            pictureBoxMini.Image = ImageEditor.Correction((Bitmap)currentImage, ImageEditor.SetHue, (short)((TrackBar)sender).Value);                     
         }
 
         private void textBoxHue_TextChanged(object sender, EventArgs e)
